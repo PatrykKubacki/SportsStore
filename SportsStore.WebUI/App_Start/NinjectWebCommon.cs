@@ -1,3 +1,5 @@
+using System.Web.Mvc;
+using SportsStore.WebUI.Infrastructure;
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(SportsStore.WebUI.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(SportsStore.WebUI.App_Start.NinjectWebCommon), "Stop")]
 
@@ -61,6 +63,7 @@ namespace SportsStore.WebUI.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+			DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }        
     }
 }
