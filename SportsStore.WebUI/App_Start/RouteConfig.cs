@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Ninject.Infrastructure.Language;
 
 namespace SportsStore.WebUI
 {
@@ -12,6 +13,12 @@ namespace SportsStore.WebUI
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+			routes.MapRoute(
+				name: null,
+				url: "Strona{page}",
+				defaults: new {controller="Product", action = "List"}
+				);
 
             routes.MapRoute(
                 name: "Default",
