@@ -30,7 +30,7 @@ namespace SportsStore.UnitTests
 			});
 			var controller = new ProductController(mock.Object) { PageSize = 3 };
 
-			var result = (ProductListViewModel)controller.List(2).Model;
+			var result = (ProductListViewModel)controller.List(null,2).Model;
 
 			Product[] products = result.Products.ToArray();
 			Assert.IsTrue(products.Length == 2);
@@ -65,7 +65,7 @@ namespace SportsStore.UnitTests
 				new Product { Id = 5, Name = "P5" },
 			});
 			var controller = new ProductController(mock.Object) { PageSize = 3 };
-			var result = (ProductListViewModel)controller.List(2).Model;
+			var result = (ProductListViewModel)controller.List(null,2).Model;
 
 			PagingInfo pageinfo = result.PagingInfo;
 			Assert.AreEqual(pageinfo.CurrentPage,2);
