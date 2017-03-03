@@ -5,7 +5,7 @@ using SportsStore.WebUI.Models;
 
 namespace SportsStore.WebUI.Controllers
 {
-
+	
 	public class ProductController : Controller
 	{
 		IProductRepository _repository;
@@ -20,7 +20,7 @@ namespace SportsStore.WebUI.Controllers
 		{
 			var model = new ProductListViewModel
 			{
-				Products = _repository.Products.OrderBy(p => p.ProductID)
+				Products = _repository.Products.OrderBy(p => p.Id)
 										       .Skip((page - 1) * PageSize)
 											   .Take(PageSize),
 				PagingInfo = new PagingInfo

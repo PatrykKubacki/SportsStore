@@ -5,7 +5,6 @@ using Moq;
 using Ninject;
 using SportsStore.Domain.Abstract;
 using SportsStore.Domain.Concrete;
-using SportsStore.Domain.Entities;
 
 namespace SportsStore.WebUI.Infrastructure
 {
@@ -33,6 +32,12 @@ namespace SportsStore.WebUI.Infrastructure
 		void AddBindings()
 		{
 			_kernel.Bind<IProductRepository>().To<EFProductRepository>();
+			_kernel.Bind<IAddressRepository>().To<EFAddressRepository>();
+			_kernel.Bind<ICategoryRepository>().To<EFCategoryRepository>();
+			_kernel.Bind<IOrderRepository>().To<EFOrderRepository>();
+			_kernel.Bind<IRoleRepository>().To<EFRoleRepository>();
+			_kernel.Bind<IUserRepository>().To<EFUserRepository>();
+			_kernel.Bind<ICityRepository>().To<EFCityRepository>();
 		}
 	}
 

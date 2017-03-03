@@ -5,7 +5,7 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SportsStore.Domain.Abstract;
-using SportsStore.Domain.Entities;
+using SportsStore.Domain.Data;
 using SportsStore.WebUI.Controllers;
 using SportsStore.WebUI.HtmlHelpers;
 using SportsStore.WebUI.Models;
@@ -22,11 +22,11 @@ namespace SportsStore.UnitTests
 			var mock = new Mock<IProductRepository>();
 			mock.Setup(m => m.Products).Returns(new List<Product>
 			{
-				new Product { ProductID = 1, Name = "P1" },
-				new Product { ProductID = 2, Name = "P2" },
-				new Product { ProductID = 3, Name = "P3" },
-				new Product { ProductID = 4, Name = "P4" },
-				new Product { ProductID = 5, Name = "P5" },
+				new Product { Id = 1, Name = "P1" },
+				new Product { Id = 2, Name = "P2" },
+				new Product { Id = 3, Name = "P3" },
+				new Product { Id = 4, Name = "P4" },
+				new Product { Id = 5, Name = "P5" },
 			});
 			var controller = new ProductController(mock.Object) { PageSize = 3 };
 
@@ -58,11 +58,11 @@ namespace SportsStore.UnitTests
 			var mock = new Mock<IProductRepository>();
 			mock.Setup(m => m.Products).Returns(new List<Product>
 			{
-				new Product { ProductID = 1, Name = "P1" },
-				new Product { ProductID = 2, Name = "P2" },
-				new Product { ProductID = 3, Name = "P3" },
-				new Product { ProductID = 4, Name = "P4" },
-				new Product { ProductID = 5, Name = "P5" },
+				new Product { Id = 1, Name = "P1" },
+				new Product { Id = 2, Name = "P2" },
+				new Product { Id = 3, Name = "P3" },
+				new Product { Id = 4, Name = "P4" },
+				new Product { Id = 5, Name = "P5" },
 			});
 			var controller = new ProductController(mock.Object) { PageSize = 3 };
 			var result = (ProductListViewModel)controller.List(2).Model;
