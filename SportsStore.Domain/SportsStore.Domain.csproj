@@ -79,8 +79,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IOrderProcessor.cs" />
     <Compile Include="Abstract\IRepositories.cs" />
     <Compile Include="Concrete\EFRepositories.cs" />
+    <Compile Include="Concrete\EmailOrderProcesssor.cs" />
     <Compile Include="Data\Address.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -115,13 +117,16 @@
     <Compile Include="Data\Role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\ShippingDetails.cs" />
     <Compile Include="Data\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <EntityDeploy Include="Data\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
