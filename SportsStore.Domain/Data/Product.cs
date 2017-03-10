@@ -7,6 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+
 namespace SportsStore.Domain.Data
 {
     using System;
@@ -19,11 +22,22 @@ namespace SportsStore.Domain.Data
         {
             this.Orders = new HashSet<Order>();
         }
-    
+
+        [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Proszê podaj nazwe produktu")]
+        [Display(Name = "Nazwa")]
         public string Name { get; set; }
+
+        [Required]
+        [Range(0.01,double.MaxValue,ErrorMessage = "Proszê podaæ dodatni¹ cene")]
         public decimal Price { get; set; }
+
+        [DataType(DataType.MultilineText), Display(Name="Opis")]
+        [Required(ErrorMessage = "Proszê podaj opis")]
         public string Description { get; set; }
+
         public Nullable<int> CategoryId { get; set; }
     
         public virtual Category Category { get; set; }
