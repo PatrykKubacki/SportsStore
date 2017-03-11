@@ -15,6 +15,7 @@
 		<div class="visible-xs">Sklep</div>
 		<div class="visible-xs">Sportowy</div>
 	</a>
+    @Html.ActionLink("Zaloguj(Administrator)", "Login", "Account", null, new { @class = "btn btn-default" })
 	@Html.Action("Summary","Cart")
 </div>
 <div class="visible-xs">
@@ -22,7 +23,7 @@
 </div>
 <div class="row panel">
 	<div id="categories" class="col-sm-3 hidden-xs">
-	@Html.Action("Menu", "Nav")	
+	@Html.Action("Menu", "Nav")
 	</div>
 	<div class="col-xs-12 col-sm-8">
 		@RenderBody()

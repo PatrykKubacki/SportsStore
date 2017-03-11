@@ -26,11 +26,12 @@
                     <td>
                         @using (Html.BeginForm("Delete", "Admin")) {
                             @Html.Hidden("Id", item.Id)
-                            <input type="submit" value="Usuń">
+                            <input type="submit" value="Usuń" class="btn btn-danger">
                         }
                     </td>
                 </tr>
             }
         </table>
+        @Html.ActionLink("Dodaj nowy","Create","Admin",null,new {@class="btn btn-primary"})
     </div>
 </div>
