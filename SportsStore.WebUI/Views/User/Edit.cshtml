@@ -1,0 +1,59 @@
+﻿@using SportsStore.Domain.Data
+@model User
+
+@{
+    ViewBag.Title = $"Edycja: {Model.FirstName}";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Edycja @Model.FirstName</h3>
+    </div>
+    @using (Html.BeginForm("Edit", "User", FormMethod.Post)) {
+        <div class="panel-body">
+            @Html.HiddenFor(x => x.Id)
+            @foreach (var property in ViewData.ModelMetadata.Properties) {
+                switch (property.PropertyName) {
+                    case "Id":
+                    case "Address":
+                    case "AddressId":
+                    case "Role":
+                    case "RoleId":
+                    case "Orders":
+                    case "Email":
+                        break;
+                    default:
+                        <div class="form-group">
+                            <label>@(property.DisplayName ?? property.PropertyName)</label>
+                            @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+                            @Html.ValidationMessage(property.PropertyName)
+                        </div>
+                        break;
+                }
+            }
+            
+            <div class="form-group">
+                <label>@Html.LabelFor(p=>p.Email)</label>
+                @Html.TextBoxFor(p=>p.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m=>m.Email)
+            </div>
+
+            <div class="form-group">
+                <label>@Html.LabelFor(p=>p.AddressId)</label>
+                @Html.DropDownListFor(p=>p.AddressId, (SelectList)ViewBag.Addresses
+                                      , "Wybierz Adres", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m=>m.AddressId)
+            </div>
+            <div class="form-group">
+                <label>@Html.LabelFor(p=>p.RoleId)</label>
+                        @Html.DropDownListFor(p=>p.RoleId, (SelectList)ViewBag.Roles
+                        , "Wybierz Role", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m=>m.RoleId)
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Zapisz" class="btn btn-primary"/>
+            @Html.ActionLink("Wróć do listy", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+    }
+</div>

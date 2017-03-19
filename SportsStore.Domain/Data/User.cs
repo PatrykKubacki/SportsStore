@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace SportsStore.Domain.Data
 {
     using System;
@@ -21,12 +23,41 @@ namespace SportsStore.Domain.Data
         }
     
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Podaj adres e-mail")]
+        [Display(Name = "Adres e-mail")]
+        [EmailAddress(ErrorMessage = "Niepoprawny adres e - mail")]
+        [StringLength(50,ErrorMessage = "Maksymalnie 50 znaków ")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "Podaj has³o")]
+        [Display(Name = "Has³o")]
+        [DataType(DataType.Password)]
+        [StringLength(50, ErrorMessage = "Maksymalnie 50 znaków ")]
         public string Password { get; set; }
+
+        [Required(ErrorMessage = "Podaj imiê")]
+        [Display(Name = "Imiê")]
+        [StringLength(50, ErrorMessage = "Maksymalnie 50 znaków ")]
         public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Podaj Nazwisko")]
+        [Display(Name = "Nazwisko")]
+        [StringLength(50, ErrorMessage = "Maksymalnie 50 znaków ")]
         public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Podaj numer telefonu")]
+        [Display(Name = "Numer telefonu")]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "Z³y format numeru telefonu")]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$", ErrorMessage = "Telefon musi byæ w formacie 000-000-000")]
         public string Phone { get; set; }
+
+        [Required(ErrorMessage = "Wybierz rolê")]
+        [Display(Name = "Rola")]
         public Nullable<int> RoleId { get; set; }
+
+        [Required(ErrorMessage = "Podaj Adres")]
+        [Display(Name = "Adres")]
         public Nullable<int> AddressId { get; set; }
     
         public virtual Address Address { get; set; }

@@ -28,7 +28,7 @@ namespace SportsStore.WebUI.Controllers
             if (!ModelState.IsValid) return View();
 
             if (_authProvider.Authenticate(model.UserName, model.Password))
-                return Redirect(returnUrl ?? Url.Action("Index", "Admin"));
+                return Redirect(returnUrl ?? Url.Action("Index", "Product"));
 
             ModelState.AddModelError("", "Nieprawidłowa nazwa użytkownika lub niepoprawne hasło");
             return View();

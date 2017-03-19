@@ -1,0 +1,44 @@
+﻿@using SportsStore.Domain.Data
+@model Address
+
+@{
+    ViewBag.Title = $"Edycja: {Model.Street}";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Edycja @Model.Street</h3>
+    </div>
+    @using (Html.BeginForm("Edit", "Addres", FormMethod.Post)) {
+        <div class="panel-body">
+            @Html.HiddenFor(x => x.Id)
+            @foreach (var property in ViewData.ModelMetadata.Properties) {
+                switch (property.PropertyName) {
+                    case "Id":
+                    case "City":
+                    case "CityId":
+                    case "Users":
+                        break;
+                    default:
+                        <div class="form-group">
+                            <label>@(property.DisplayName ?? property.PropertyName)</label>
+                                   @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+                                   @Html.ValidationMessage(property.PropertyName)
+                        </div>
+                        break;
+                }
+            }
+            
+            <div class="form-group">
+                <label>@Html.LabelFor(p=>p.CityId)</label>
+                        @Html.DropDownListFor(p=>p.CityId, (SelectList)ViewBag.Cities
+                        , "Wybierz Miasto", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m=>m.CityId)
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Zapisz" class="btn btn-primary"/>
+            @Html.ActionLink("Wróć do listy", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+    }
+</div>

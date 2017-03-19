@@ -24,7 +24,7 @@ namespace SportsStore.UnitTests
 				new Product { Id = 3, Name = "P3" },
 			});
 
-			var target = new AdminController(mock.Object);
+			var target = new ProductController(mock.Object);
 			var result = ((IEnumerable<Product>)target.Index().ViewData.Model).ToArray();
 
 			Assert.AreEqual(result.Length,3);
@@ -43,7 +43,7 @@ namespace SportsStore.UnitTests
 				new Product { Id = 2, Name = "P2" },
 				new Product { Id = 3, Name = "P3" },
 			});
-			var target = new AdminController(mock.Object);
+			var target = new ProductController(mock.Object);
 
 			var p1 = target.Edit(1).ViewData.Model as Product;
 			var p2 = target.Edit(2).ViewData.Model as Product;
@@ -64,7 +64,7 @@ namespace SportsStore.UnitTests
 				new Product { Id = 2, Name = "P2" },
 				new Product { Id = 3, Name = "P3" },
 			});
-			var target = new AdminController(mock.Object);
+			var target = new ProductController(mock.Object);
 
 			var result = target.Edit(4).ViewData.Model as Product;
 
@@ -75,7 +75,7 @@ namespace SportsStore.UnitTests
 		public void CanSaveValidChanges()
 		{
 			var mock = new Mock<IProductRepository>();
-			var target = new AdminController(mock.Object);
+			var target = new ProductController(mock.Object);
 		    var product = new Product { Name = "test" };
 
 		    ActionResult result = target.Edit(product);
@@ -87,7 +87,7 @@ namespace SportsStore.UnitTests
 		public void CanSaveInValidChanges()
 		{
 			var mock = new Mock<IProductRepository>();
-			var target = new AdminController(mock.Object);
+			var target = new ProductController(mock.Object);
 		    var product = new Product { Name = "test" };
             target.ModelState.AddModelError("error","error");
 
@@ -108,12 +108,32 @@ namespace SportsStore.UnitTests
                 product,
 		        new Product{Id=3,Name = "P3"} 
 		    });
-            var target = new AdminController(mock.Object);
+            var target = new ProductController(mock.Object);
 
 		    target.Delete(product.Id);
 
             mock.Verify(m=>m.DeleteProduct(product.Id));
 		}
+
+	    [TestMethod]
+	    public void CanRetriveImageData()
+	    {
+	        Product product = new Product
+	            {Id = 2,Name = "Test", ImageData = new byte[]{},ImageMimeType = "image/png"};
+            var mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[]
+            {
+                new Product{Id=1,Name = "P1"},
+                product,
+                new Product{Id=3,Name = "P3"}
+            }.AsQueryable());
+            var target = new ProductController(mock.Object);
+                ActionResult result = target.GetImage(2);
+
+            Assert.IsNotNull(result);
+	        Assert.IsInstanceOfType(result, typeof(FileResult));
+            Assert.AreEqual(product.ImageMimeType,((FileResult)result).ContentType);
+            }
 	}
 
 }

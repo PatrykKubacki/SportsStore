@@ -7,9 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace SportsStore.Domain.Data
 {
-    using System;
     using System.Collections.Generic;
     
     public partial class Category
@@ -21,6 +22,10 @@ namespace SportsStore.Domain.Data
         }
     
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Podaj nazwe kategorii")]
+        [Display(Name = "Nazwa kategorii")]
+        [StringLength(30, ErrorMessage = "Maksymalnie 30 znaków")]
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -5,82 +5,224 @@ using SportsStore.Domain.Data;
 namespace SportsStore.Domain.Concrete
 {
 
-	public class EFAddressRepository : IAddressRepository
-	{
-		Entities _context = new Entities();
-		public IEnumerable<Address> Addresses => _context.Addresses;
-	}
+    public class EFAddressRepository : IAddressRepository
+    {
+        Entities _context = new Entities();
+        public IEnumerable<Address> Addresses => _context.Addresses;
+        public IEnumerable<City> Cities => _context.Cities;
+
+        public void SaveAddress(Address address)
+        {
+            if (address.Id == 0)
+            {
+                _context.Addresses.Add(address);
+            }
+            else
+            {
+                var dbEnty = _context.Addresses.Find(address.Id);
+                if (dbEnty != null)
+                    dbEnty.CityId = address.CityId;
+                dbEnty.Code = address.Code;
+                dbEnty.Street = address.Street;
+                dbEnty.Number = address.Number;
+            }
+            _context.SaveChanges();
+        }
+
+        public Address DeleteAddress(int Id)
+        {
+            var dbEntry = _context.Addresses.Find(Id);
+            if (dbEntry == null) return null;
+
+            _context.Addresses.Remove(dbEntry);
+            _context.SaveChanges();
+            return dbEntry;
+        }
+    }
 
 
-	public class EFCategoryRepository : ICategoryRepository
-	{
-		Entities _context = new Entities();
-		public IEnumerable<Category> Categories => _context.Categories;
-	}
+    public class EFCategoryRepository : ICategoryRepository
+    {
+        Entities _context = new Entities();
+        public IEnumerable<Category> Categories => _context.Categories;
+
+        public void SaveCategory(Category category)
+        {
+            if (category.Id == 0)
+            {
+                _context.Categories.Add(category);
+            }
+            else
+            {
+                var dbEnty = _context.Categories.Find(category.Id);
+                if (dbEnty != null)
+                    dbEnty.Name = category.Name;
+            }
+            _context.SaveChanges();
+        }
+
+        public Category DeleteCategory(int Id)
+        {
+            var dbEntry = _context.Categories.Find(Id);
+            if (dbEntry == null) return null;
+
+            _context.Categories.Remove(dbEntry);
+            _context.SaveChanges();
+            return dbEntry;
+        }
+    }
 
 
-	public class EFCityRepository : ICityRepository
-	{
-		Entities _context = new Entities();
-		public IEnumerable<City> Cities => _context.Cities;
-	}
+    public class EFCityRepository : ICityRepository
+    {
+        Entities _context = new Entities();
+        public IEnumerable<City> Cities => _context.Cities;
+
+        public void SaveCity(City city)
+        {
+            if (city.Id == 0)
+            {
+                _context.Cities.Add(city);
+            }
+            else
+            {
+                var dbEnty = _context.Cities.Find(city.Id);
+                if (dbEnty != null)
+                    dbEnty.Name = city.Name;
+            }
+            _context.SaveChanges();
+        }
+
+        public City DeleteCity(int Id)
+        {
+            var dbEntry = _context.Cities.Find(Id);
+            if (dbEntry == null) return null;
+
+            _context.Cities.Remove(dbEntry);
+            _context.SaveChanges();
+            return dbEntry;
+        }
+    }
 
 
-	public class EFOrderRepository : IOrderRepository
-	{
-		Entities _context = new Entities();
-		public IEnumerable<Order> Orders => _context.Orders;
-	}
+    public class EFOrderRepository : IOrderRepository
+    {
+        Entities _context = new Entities();
+        public IEnumerable<Order> Orders => _context.Orders;
+    }
 
 
-	public class EFRoleRepository : IRoleRepository
-	{
-		Entities _context = new Entities();
-		public IEnumerable<Role> Roles => _context.Roles;
-	}
+    public class EFRoleRepository : IRoleRepository
+    {
+        Entities _context = new Entities();
+        public IEnumerable<Role> Roles => _context.Roles;
+
+        public void SaveRole(Role role)
+        {
+            if (role.Id == 0)
+            {
+                _context.Roles.Add(role);
+            }
+            else
+            {
+                var dbEnty = _context.Roles.Find(role.Id);
+                if (dbEnty != null)
+                    dbEnty.Name = role.Name;
+            }
+            _context.SaveChanges();
+        }
+
+        public Role DeleteRole(int Id)
+        {
+            var dbEntry = _context.Roles.Find(Id);
+            if (dbEntry == null) return null;
+
+            _context.Roles.Remove(dbEntry);
+            _context.SaveChanges();
+            return dbEntry;
+        }
+    }
 
 
-	public class EFUserRepository : IUserRepository
-	{
-		Entities _context = new Entities();
-		public IEnumerable<User> Users => _context.Users;
-	}
+    public class EFUserRepository : IUserRepository
+    {
+        Entities _context = new Entities();
+        public IEnumerable<User> Users => _context.Users;
+        public IEnumerable<Address> Addresses => _context.Addresses;
+        public IEnumerable<Role> Roles => _context.Roles;
+
+        public void SaveUser(User user)
+        {
+            if (user.Id == 0)
+            {
+                _context.Users.Add(user);
+            }
+            else
+            {
+                var dbEnty = _context.Users.Find(user.Id);
+                if (dbEnty != null)
+                {
+                    dbEnty.AddressId = user.AddressId;
+                    dbEnty.Email = user.Email;
+                    dbEnty.FirstName = user.Email;
+                    dbEnty.LastName = user.LastName;
+                    dbEnty.Password = user.Password;
+                    dbEnty.Phone = user.Phone;
+                    dbEnty.RoleId = user.RoleId;
+                }
+            }
+            _context.SaveChanges();
+        }
+
+        public User DeleteUser(int Id)
+        {
+            var dbEntry = _context.Users.Find(Id);
+            if (dbEntry == null) return null;
+
+            _context.Users.Remove(dbEntry);
+            _context.SaveChanges();
+            return dbEntry;
+        }
+    }
 
 
-	public class EFProductRepository : IProductRepository
-	{
-		Entities _context = new Entities();
-		public IEnumerable<Product> Products => _context.Products;
+    public class EFProductRepository : IProductRepository
+    {
+        Entities _context = new Entities();
+        public IEnumerable<Product> Products => _context.Products;
+        public IEnumerable<Category> Categories => _context.Categories;
 
-	    public void SaveProduct(Product product)
-	    {
-	        if (product.Id == 0)
-	        {
-	            _context.Products.Add(product);
-	        }
-	        else
-	        {
-	            Product dbEntry = _context.Products.Find(product.Id);
-	            if (dbEntry != null)
-	            {
-	                dbEntry.Name = product.Name;
-	                dbEntry.Description = product.Description;
-	                dbEntry.Price = product.Price;
-	                dbEntry.CategoryId = product.CategoryId;
-	            }
-	        }
-	        _context.SaveChanges();
-	    }
+        public void SaveProduct(Product product)
+        {
+            if (product.Id == 0)
+            {
+                _context.Products.Add(product);
+            }
+            else
+            {
+                var dbEntry = _context.Products.Find(product.Id);
+                if (dbEntry != null)
+                {
+                    dbEntry.Name = product.Name;
+                    dbEntry.Description = product.Description;
+                    dbEntry.Price = product.Price;
+                    dbEntry.CategoryId = product.CategoryId;
+                    dbEntry.ImageData = product.ImageData;
+                    dbEntry.ImageMimeType = product.ImageMimeType;
+                }
+            }
+            _context.SaveChanges();
+        }
 
-	    public Product DeleteProduct(int Id)
-	    {
-            Product dbEntry = _context.Products.Find(Id);
-	        if (dbEntry == null) return null;
+        public Product DeleteProduct(int Id)
+        {
+            var dbEntry = _context.Products.Find(Id);
+            if (dbEntry == null) return null;
 
-	        _context.Products.Remove(dbEntry);
-	        _context.SaveChanges();
-	        return dbEntry;
-	    }
-	}
+            _context.Products.Remove(dbEntry);
+            _context.SaveChanges();
+            return dbEntry;
+        }
+    }
 
 }

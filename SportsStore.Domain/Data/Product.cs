@@ -8,7 +8,6 @@
 //------------------------------------------------------------------------------
 
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 
 namespace SportsStore.Domain.Data
 {
@@ -22,23 +21,30 @@ namespace SportsStore.Domain.Data
         {
             this.Orders = new HashSet<Order>();
         }
-
-        [HiddenInput(DisplayValue = false)]
+    
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Proszê podaj nazwe produktu")]
-        [Display(Name = "Nazwa")]
+        [Required(ErrorMessage = "Podaj nazwe produktu")]
+        [Display(Name = "Nazwa produktu")]
+        [StringLength(30, ErrorMessage = "Maksymalnie 30 znaków")]
         public string Name { get; set; }
 
-        [Required]
-        [Range(0.01,double.MaxValue,ErrorMessage = "Proszê podaæ dodatni¹ cene")]
+        [Required(ErrorMessage = "Podaj cene")]
+        [Display(Name = "Cena")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Podaj dodatni¹ cene")]
         public decimal Price { get; set; }
 
-        [DataType(DataType.MultilineText), Display(Name="Opis")]
-        [Required(ErrorMessage = "Proszê podaj opis")]
+        [Required(ErrorMessage = "Podaj opis")]
+        [Display(Name = "Opis")]
+        [StringLength(200, ErrorMessage = "Maksymalnie 200 znaków")]
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "Wybierz kategorie")]
+        [Display(Name = "Kategoria")]
         public Nullable<int> CategoryId { get; set; }
+
+        public byte[] ImageData { get; set; }
+        public string ImageMimeType { get; set; }
     
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

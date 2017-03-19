@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace SportsStore.Domain.Data
 {
     using System;
@@ -21,9 +23,24 @@ namespace SportsStore.Domain.Data
         }
     
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Podaj ulicê")]
+        [Display(Name = "Ulica")]
+        [StringLength(50, ErrorMessage = "Maksymalnie 50 znaków")]
         public string Street { get; set; }
+
+        [Required(ErrorMessage = "Podaj kod pocztowy")]
+        [Display(Name = "Kod pocztowy")]
+		[RegularExpression(@"^\(?([0-9]{2})\)?[-. ]?([0-9]{3})$", ErrorMessage = "Podaj kod pocztowy w formacie 00-000")]
         public string Code { get; set; }
+
+        [Required(ErrorMessage = "Podaj numer domu/mieszkania")]
+        [Display(Name = "Numer domu /mieszkania")]
+        [StringLength(10,ErrorMessage = "Maksymalnie 10 znaków")]
         public string Number { get; set; }
+
+        [Required(ErrorMessage = "Wybierz miasto")]
+        [Display(Name = "Miasto")]
         public Nullable<int> CityId { get; set; }
     
         public virtual City City { get; set; }

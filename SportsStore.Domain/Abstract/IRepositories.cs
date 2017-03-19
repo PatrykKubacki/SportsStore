@@ -4,41 +4,61 @@ using SportsStore.Domain.Data;
 namespace SportsStore.Domain.Abstract
 {
 
-	public interface ICategoryRepository
-	{
-		IEnumerable<Category> Categories { get; }
-	}
+    public interface ICategoryRepository
+    {
+        IEnumerable<Category> Categories { get; }
+        void SaveCategory(Category product);
+        Category DeleteCategory(int Id);
+    }
 
-	public interface ICityRepository
-	{
-		IEnumerable<City> Cities { get; }
-	}
 
-	public interface IOrderRepository
-	{
-		IEnumerable<Order> Orders { get; }
-	}
+    public interface ICityRepository
+    {
+        IEnumerable<City> Cities { get; }
+        void SaveCity(City product);
+        City DeleteCity(int Id);
+    }
 
-	public interface IProductRepository
-	{
-		IEnumerable<Product> Products { get; }
-	    void SaveProduct(Product product);
-	    Product DeleteProduct(int Id);
-	}
 
-	public interface IRoleRepository
-	{
-		IEnumerable<Role> Roles { get; }
-	}
+    public interface IOrderRepository
+    {
+        IEnumerable<Order> Orders { get; }
+    }
 
-	public interface IUserRepository
-	{
-		IEnumerable<User> Users { get; }
-	}
 
-	public interface IAddressRepository
-	{
-		IEnumerable<Address> Addresses { get; }
-	}
+    public interface IProductRepository
+    {
+        IEnumerable<Product> Products { get; }
+        IEnumerable<Category> Categories { get; }
+        void SaveProduct(Product product);
+        Product DeleteProduct(int Id);
+    }
+
+
+    public interface IRoleRepository
+    {
+        IEnumerable<Role> Roles { get; }
+        void SaveRole(Role role);
+        Role DeleteRole(int Id);
+    }
+
+
+    public interface IUserRepository
+    {
+        IEnumerable<User> Users { get; }
+        IEnumerable<Address> Addresses { get; }
+        IEnumerable<Role> Roles { get; }
+        void SaveUser(User product);
+        User DeleteUser(int Id);
+    }
+
+
+    public interface IAddressRepository
+    {
+        IEnumerable<Address> Addresses { get; }
+        IEnumerable<City> Cities { get; }
+        void SaveAddress(Address product);
+        Address DeleteAddress(int Id);
+    }
 
 }
