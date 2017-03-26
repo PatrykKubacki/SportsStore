@@ -7,19 +7,20 @@ using SportsStore.WebUI.Models;
 
 namespace SportsStore.WebUI.Controllers
 {
-	
-	public class ProductController : Controller
+    [Authorize]
+    public class ProductController : Controller
 	{
 		IProductRepository _repository;
 		public int PageSize = 4;
 
-		public ProductController(IProductRepository repository)
+        public ProductController(IProductRepository repository)
 		{
 			_repository = repository;
 
 		}
 
-		public ViewResult List(string category,int page = 1)
+        [AllowAnonymous]
+        public ViewResult List(string category,int page = 1)
 		{
 			var model = new ProductListViewModel
 			{
@@ -41,7 +42,8 @@ namespace SportsStore.WebUI.Controllers
 			return View(model);
 		}
 
-	    public FileContentResult GetImage(int Id)
+        [AllowAnonymous]
+        public FileContentResult GetImage(int Id)
 	    {
 	        Product product = _repository.Products.FirstOrDefault(p => p.Id == Id);
 	        return product != null 
@@ -49,18 +51,20 @@ namespace SportsStore.WebUI.Controllers
                 : null;
 	    }
 
+        [Authorize(Roles = "Administrator")]
         public ViewResult Index()
         {
-            
             return View(_repository.Products);
         }
 
+        [Authorize(Roles = "Administrator")]
         public ViewResult Create()
         {
             ViewBag.Categories = new SelectList(_repository.Categories, "Id", "Name");
             return View("Edit", new Product());
         }
 
+        [Authorize(Roles = "Administrator")]
         public ViewResult Edit(int Id)
         {
             Product product = _repository.Products.FirstOrDefault(p => p.Id == Id);
@@ -71,6 +75,7 @@ namespace SportsStore.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Edit(Product product, HttpPostedFileBase image = null)
         {
             if (!ModelState.IsValid) return View(product);
@@ -87,6 +92,7 @@ namespace SportsStore.WebUI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Delete(int Id)
         {
             Product deletedProduct = _repository.DeleteProduct(Id);

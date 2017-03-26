@@ -8,6 +8,7 @@ using SportsStore.Domain.Data;
 
 namespace SportsStore.WebUI.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class UserController : Controller
     {
         IUserRepository _repository;
@@ -18,6 +19,7 @@ namespace SportsStore.WebUI.Controllers
             _repository = repository;
 
         }
+        [Authorize(Roles = "Administrator")]
         public ViewResult Index()
         {
 

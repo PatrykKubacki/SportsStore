@@ -73,13 +73,39 @@ namespace SportsStore.Domain.Concrete
 	public class EmailSettings
 	{
 		public string MailToAddress = "zamowienie@o2.pl";
-		public string MailFromAddress = "SklepSportowy@o2.pl";
+		public string MailFromAddress = "TestowyAdresEmail@o2.pl";
 		public bool UseSsl = true;
-		public string Username = "zamowienie@o2.pl";
-		public string Password = "123456";
-		public string ServerName = "poczta@o2.pl";
+		public string Username = "TestowyAdresEmail@o2.pl";
+        public string Password = "Zaq12wsx";
+		public string ServerName = "poczta.o2.pl";
 		public int ServerPort = 587;
 		public bool WriteAsFile = false;
 		public string FileLocation = @"c:/SportsStore";
 	}
+
+
+    public class EmailSender : IEmailSender
+    {
+        EmailSettings _settings;
+
+        public EmailSender(EmailSettings settings)
+        {
+            _settings = settings;
+        }
+
+        public void SendMessage(string email)
+        {
+            using (var smtpClinet = new SmtpClient())
+            {
+                smtpClinet.EnableSsl = _settings.UseSsl;
+                smtpClinet.Port = _settings.ServerPort;
+                smtpClinet.Host = _settings.ServerName;
+                smtpClinet.UseDefaultCredentials = false;
+                smtpClinet.Credentials = new NetworkCredential(_settings.Username, _settings.Password);
+
+                var mailMessage = new MailMessage(_settings.MailFromAddress, email, "Pomyślnie Zarejestrowano", $"Twój login to: {email}\nMożesz teraz wejść w http://localhost:3416/Account/Login i dokonać logowania");
+                smtpClinet.Send(mailMessage);
+            } 
+        }
+    }
 }

@@ -28,7 +28,30 @@
             </ul>
             <a class="navbar-brand" href="#">Panel Administracyjny</a>
         </div>
+        <ul class="nav navbar-nav navbar-right">
+            @{
+                if (HttpContext.Current.User.Identity.IsAuthenticated) {
+                    var userName = HttpContext.Current.User.Identity.Name;
+                    <li> @Html.ActionLink(userName, "Login", "Account", null, new { @class = "navbar-btn" })</li>
+                    <li>@Html.ActionLink("Wyloguj", "Logout", "Account", null, new { @class = "navbar-btn" })</li>
+                } else {
+                    <li>
+                        <a href="@Url.Action("Register", "Account")" class="nav navbar-btn">
+                            Rejestracja
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Login", "Account")" class="nav navbar-btn">
+                            Zaloguj
+                            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                        </a>
+                    </li>
+                }
+            }
+        </ul>
     </div>
+
 </nav>
 <div>
     @if (TempData["message"] != null) {

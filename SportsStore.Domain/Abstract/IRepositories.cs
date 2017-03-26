@@ -7,7 +7,7 @@ namespace SportsStore.Domain.Abstract
     public interface ICategoryRepository
     {
         IEnumerable<Category> Categories { get; }
-        void SaveCategory(Category product);
+        void SaveCategory(Category category);
         Category DeleteCategory(int Id);
     }
 
@@ -15,7 +15,7 @@ namespace SportsStore.Domain.Abstract
     public interface ICityRepository
     {
         IEnumerable<City> Cities { get; }
-        void SaveCity(City product);
+        void SaveCity(City city);
         City DeleteCity(int Id);
     }
 
@@ -48,7 +48,7 @@ namespace SportsStore.Domain.Abstract
         IEnumerable<User> Users { get; }
         IEnumerable<Address> Addresses { get; }
         IEnumerable<Role> Roles { get; }
-        void SaveUser(User product);
+        void SaveUser(User user);
         User DeleteUser(int Id);
     }
 
@@ -57,7 +57,7 @@ namespace SportsStore.Domain.Abstract
     {
         IEnumerable<Address> Addresses { get; }
         IEnumerable<City> Cities { get; }
-        void SaveAddress(Address product);
+        void SaveAddress(Address address);
         Address DeleteAddress(int Id);
     }
 

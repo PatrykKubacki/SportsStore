@@ -9,7 +9,7 @@ namespace SportsStore.WebUI.Models
     public class LoginViewModel
     {
         [Required(ErrorMessage = "Proszę podać nazwe użytkownika")]
-        public string UserName { get; set; }
+        public string Email { get; set; }
 
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Proszę podać hasło")]

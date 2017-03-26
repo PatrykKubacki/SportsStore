@@ -11,7 +11,7 @@ namespace SportsStore.UnitTests
     [TestClass]
     public class AdminSecurityTests
     {
-        [TestMethod]
+       /* [TestMethod]
         public void CanLoginWithValidCredentials()
         {
            var mock = new Mock<IAuthProvider>();
@@ -45,6 +45,6 @@ namespace SportsStore.UnitTests
 
             Assert.IsInstanceOfType(result, typeof(ViewResult));
             Assert.IsFalse(((ViewResult)result).ViewData.ModelState.IsValid);
-        }
+        }*/
     }
 }

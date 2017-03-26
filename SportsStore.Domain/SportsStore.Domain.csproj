@@ -79,9 +79,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IAuthProvider.cs" />
+    <Compile Include="Abstract\IAuthentication.cs" />
+    <Compile Include="Abstract\IEmailSender.cs" />
     <Compile Include="Abstract\IOrderProcessor.cs" />
     <Compile Include="Abstract\IRepositories.cs" />
+    <Compile Include="Concrete\Authentication.cs" />
     <Compile Include="Concrete\EFRepositories.cs" />
     <Compile Include="Concrete\EmailOrderProcesssor.cs" />
     <Compile Include="Data\Address.cs">

@@ -8,6 +8,7 @@ using SportsStore.Domain.Data;
 
 namespace SportsStore.WebUI.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class RoleController : Controller
     {
         IRoleRepository _repository;

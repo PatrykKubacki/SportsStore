@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SportsStore.Domain.Abstract
 {
-    public interface IAuthProvider
+    public interface IEmailSender
     {
-        bool Authenticate(string username, string password);
+        void SendMessage(string email);
     }
 }

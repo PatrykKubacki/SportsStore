@@ -6,7 +6,6 @@ using Moq;
 using Ninject;
 using SportsStore.Domain.Abstract;
 using SportsStore.Domain.Concrete;
-using SportsStore.WebUI.Infrastructure.Concreate;
 
 namespace SportsStore.WebUI.Infrastructure
 {
@@ -40,6 +39,8 @@ namespace SportsStore.WebUI.Infrastructure
 			_kernel.Bind<IRoleRepository>().To<EFRoleRepository>();
 			_kernel.Bind<IUserRepository>().To<EFUserRepository>();
 			_kernel.Bind<ICityRepository>().To<EFCityRepository>();
+		    _kernel.Bind<IAuthentication>().To<Authentication>();
+		    _kernel.Bind<IEmailSender>().To<EmailSender>();
 
 			var emailSettings = new EmailSettings
 			{
@@ -47,7 +48,6 @@ namespace SportsStore.WebUI.Infrastructure
 			};
 
 			_kernel.Bind<IOrderProcessor>().To<EmailOrderProcesssor>().WithConstructorArgument("emailSettings", emailSettings);
-		    _kernel.Bind<IAuthProvider>().To<FormsAuthProvider>();
 		}
 	}
 
