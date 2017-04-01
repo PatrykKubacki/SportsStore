@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SportsStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SportsStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="Id" />
@@ -54,7 +54,7 @@
           <Property Name="Price" Type="money" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="CategoryId" Type="int" />
-          <Property Name="ImageData" Type="varbinary(max)" />
+          <Property Name="ImageData" Type="varbinary" MaxLength="50" />
           <Property Name="ImageMimeType" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Role">
@@ -76,8 +76,9 @@
           <Property Name="Phone" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="RoleId" Type="int" />
           <Property Name="AddressId" Type="int" />
+          <Property Name="Confirmed" Type="bit" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Address__CityId__38996AB5">
+        <Association Name="FK__Address__CityId__2C3393D0">
           <End Role="City" Type="Self.City" Multiplicity="0..1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
@@ -89,7 +90,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Order__UserId__47DBAE45">
+        <Association Name="FK__Order__UserId__36B12243">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
@@ -101,7 +102,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__Categor__44FF419A">
+        <Association Name="FK__Product__Categor__33D4B598">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -113,7 +114,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__AddressId__4222D4EF">
+        <Association Name="FK__User__AddressId__30F848ED">
           <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -125,7 +126,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__RoleId__412EB0B6">
+        <Association Name="FK__User__RoleId__300424B4">
           <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -170,23 +171,23 @@
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Address__CityId__38996AB5" Association="Self.FK__Address__CityId__38996AB5">
+          <AssociationSet Name="FK__Address__CityId__2C3393D0" Association="Self.FK__Address__CityId__2C3393D0">
             <End Role="City" EntitySet="City" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Order__UserId__47DBAE45" Association="Self.FK__Order__UserId__47DBAE45">
+          <AssociationSet Name="FK__Order__UserId__36B12243" Association="Self.FK__Order__UserId__36B12243">
             <End Role="User" EntitySet="User" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
-          <AssociationSet Name="FK__Product__Categor__44FF419A" Association="Self.FK__Product__Categor__44FF419A">
+          <AssociationSet Name="FK__Product__Categor__33D4B598" Association="Self.FK__Product__Categor__33D4B598">
             <End Role="Category" EntitySet="Category" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__AddressId__4222D4EF" Association="Self.FK__User__AddressId__4222D4EF">
+          <AssociationSet Name="FK__User__AddressId__30F848ED" Association="Self.FK__User__AddressId__30F848ED">
             <End Role="Address" EntitySet="Address" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__RoleId__412EB0B6" Association="Self.FK__User__RoleId__412EB0B6">
+          <AssociationSet Name="FK__User__RoleId__300424B4" Association="Self.FK__User__RoleId__300424B4">
             <End Role="Role" EntitySet="Role" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
@@ -199,8 +200,7 @@
             <End Role="OrderList" EntitySet="OrderList" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SportsStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -251,7 +251,7 @@
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CategoryId" Type="Int32" />
-          <Property Name="ImageData" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ImageData" Type="Binary" MaxLength="50" FixedLength="false" />
           <Property Name="ImageMimeType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Category" Relationship="Self.FK__Product__Categor__44FF419A" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="Orders" Relationship="Self.OrderList" FromRole="Product" ToRole="Order" />
@@ -279,6 +279,7 @@
           <NavigationProperty Name="Address" Relationship="Self.FK__User__AddressId__4222D4EF" FromRole="User" ToRole="Address" />
           <NavigationProperty Name="Orders" Relationship="Self.FK__Order__UserId__47DBAE45" FromRole="User" ToRole="Order" />
           <NavigationProperty Name="Role" Relationship="Self.FK__User__RoleId__412EB0B6" FromRole="User" ToRole="Role" />
+          <Property Name="Confirmed" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK__Address__CityId__38996AB5">
           <End Role="City" Type="Self.City" Multiplicity="0..1" />
@@ -443,6 +444,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="SportsStoreModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using SportsStore.Domain.Abstract;
 using SportsStore.Domain.Data;
 
@@ -169,6 +170,7 @@ namespace SportsStore.Domain.Concrete
                     dbEnty.Password = user.Password;
                     dbEnty.Phone = user.Phone;
                     dbEnty.RoleId = user.RoleId;
+                    dbEnty.Confirmed = user.Confirmed;
                 }
             }
             _context.SaveChanges();
@@ -182,6 +184,15 @@ namespace SportsStore.Domain.Concrete
             _context.Users.Remove(dbEntry);
             _context.SaveChanges();
             return dbEntry;
+        }
+
+        public void ConfirmEmail(string email)
+        {
+            var dbEntry = _context.Users.FirstOrDefault(u=>u.Email == email);
+            if (dbEntry == null) return;
+
+            dbEntry.Confirmed = true;
+            _context.SaveChanges();
         }
     }
 

@@ -14,19 +14,19 @@ namespace SportsStore.WebUI
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-	        routes.MapRoute(
+            routes.MapRoute(
 				null,
 				"",
 				new {controller = "Product", action="List" , category=(string)null, page=1}
 				);
 
-			routes.MapRoute(
+            routes.MapRoute(
 				name: null,
 				url: "Strona{page}",
 				defaults: new {controller="Product", action = "List", category = (string)null}
 				);
 
-			routes.MapRoute(
+            routes.MapRoute(
 				name: null,
 				url: "{category}",
 				defaults: new {controller="Product", action = "List", page = 1}
@@ -38,7 +38,13 @@ namespace SportsStore.WebUI
                 defaults: new { controller = "Product", action = "List", page = @"\d+" }
             );
 
-	        routes.MapRoute(null,"{controller}/{action}");
+            routes.MapRoute(null,"{controller}/{action}");
+
+            routes.MapRoute(
+                name: null,
+                url: "{Account}/{Confimarion}/{email}",
+                defaults: new { controller = "Account", action = "Confimarion", email = @"\d+" }
+            );
         }
     }
 }

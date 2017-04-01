@@ -45,9 +45,9 @@
                     @Html.PasswordFor(l => l.Password, new { @class = "form-control" })
                 </div>
                 <input type="submit" value="Zaloguj" class="btn btn-primary" />
+            @Html.ActionLink("Wróć do przeglądania sklepu", "List", "Product", null, new { @class = "btn btn-warning" })
             }
             <br/>
-            @Html.ActionLink("Wróć do przeglądania sklepu", "List", "Product", null, new { @class = "btn btn-primary" })
             </div>
                 </div>
             </div>

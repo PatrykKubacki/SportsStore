@@ -50,6 +50,7 @@ namespace SportsStore.Domain.Abstract
         IEnumerable<Role> Roles { get; }
         void SaveUser(User user);
         User DeleteUser(int Id);
+        void ConfirmEmail(string email);
     }
 
 

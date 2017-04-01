@@ -59,7 +59,9 @@ namespace SportsStore.Domain.Data
         [Required(ErrorMessage = "Podaj Adres")]
         [Display(Name = "Adres")]
         public Nullable<int> AddressId { get; set; }
-    
+
+        public bool Confirmed { get; set; }
+
         public virtual Address Address { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }

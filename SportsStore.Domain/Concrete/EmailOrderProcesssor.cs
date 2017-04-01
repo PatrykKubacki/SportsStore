@@ -103,7 +103,7 @@ namespace SportsStore.Domain.Concrete
                 smtpClinet.UseDefaultCredentials = false;
                 smtpClinet.Credentials = new NetworkCredential(_settings.Username, _settings.Password);
 
-                var mailMessage = new MailMessage(_settings.MailFromAddress, email, "Pomyślnie Zarejestrowano", $"Twój login to: {email}\nMożesz teraz wejść w http://localhost:3416/Account/Login i dokonać logowania");
+                var mailMessage = new MailMessage(_settings.MailFromAddress, email, "Pomyślnie Zarejestrowano", $"Twój login to: {email}\nPotwiedz swój adres e-mail http://localhost:3416/Account/Confirmation?email={email} \nW przeciwnym razie zignoruj te wiadomość.");
                 smtpClinet.Send(mailMessage);
             } 
         }

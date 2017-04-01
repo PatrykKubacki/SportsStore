@@ -241,6 +241,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Account\LoginResult.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Confirm.cshtml" />
     <Content Include="Views\Account\Error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

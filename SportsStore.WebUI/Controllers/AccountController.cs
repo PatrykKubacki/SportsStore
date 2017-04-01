@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -38,7 +39,7 @@ namespace SportsStore.WebUI.Controllers
             var user = _userRepository.Users.FirstOrDefault(u => u.Email == userEmail);
             return View("LoginResult",user);
         }
-
+        
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Login(LoginViewModel model)
@@ -47,8 +48,10 @@ namespace SportsStore.WebUI.Controllers
 
             if (_userAuthenctication.CheckLogin(model.Email, model.Password))
             {
-                SignInUser(model.Email);
                 var user = _userRepository.Users.FirstOrDefault(u => u.Email == model.Email);
+                if (!user.Confirmed) return RedirectToAction("Confirm", new { email = user.Email });
+
+                SignInUser(model.Email);
                 return RedirectToAction("Login");
             }
 
@@ -105,16 +108,32 @@ namespace SportsStore.WebUI.Controllers
                 if(_userRepository.Users.All(u=>u.Email != user.Email && u.Phone != user.Phone))
                     _userRepository.SaveUser(CreateNewClient(user));
 
-                _emailSender.SendMessage(user.Email);
-
+                return RedirectToAction("Confirm",new{email = user.Email});
             }
             catch (Exception ex)
             {
                 ViewBag.Error = ex.Message;
                 return View("Error");
             }
+        }
 
+        [AllowAnonymous]
+        public ActionResult Confirmation(string email)
+        {
+            _userRepository.ConfirmEmail(email);
             return RedirectToAction("Login");
+        }
+
+        [AllowAnonymous]
+        public ActionResult Confirm(string email)
+        {
+            var user = _userRepository.Users.FirstOrDefault(u => u.Email == email);
+            if (user.Confirmed)
+                RedirectToAction("Login");
+
+            ViewBag.Email = email;
+            _emailSender.SendMessage(email);
+            return View();
         }
 
         User CreateNewClient(User user = null)
@@ -129,6 +148,7 @@ namespace SportsStore.WebUI.Controllers
                 FirstName =  user?.FirstName ?? "",
                 LastName =  user?.LastName ?? "",
                 Phone = user?.Phone ?? "",
+                Confirmed = user?.Confirmed ?? false,
 
                 Address = addres ?? new Address
                 {
