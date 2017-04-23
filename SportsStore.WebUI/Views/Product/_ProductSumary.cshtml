@@ -1,27 +1,38 @@
-﻿@using SportsStore.Domain.Data
+﻿@using System.Globalization
+@using SportsStore.Domain.Data
 @model Product
 	
 <div class="well">
     
     @if (Model.ImageData != null) {
         <div class="pull-left" style="margin-right: 10px;">
-            <img class="img-thumbnail" width="75" height="75"
+            <img class="img-thumbnail" width="150" height="150"
                  src="@Url.Action("GetImage","Product",new{Model.Id})"/>
         </div>
     }
     <h3>
         <strong>@Model.Name</strong>
-        <span class="pull-right label label-primary">@Model.Price.ToString("C")</span>
+        <span class="pull-right label label-primary">@Model.Price.ToString("C",CultureInfo.CreateSpecificCulture("pl-pl")) </span>
     </h3>
     @using (Html.BeginForm("AddToCart", "Cart")) {
         <div class="pull-right">
             @Html.HiddenFor(x => x.Id)
             @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
-            @if (HttpContext.Current.User.IsInRole("Klient")){
-                <input type="submit" class="btn btn-success" value="Dodaj do koszyka" />
+            @if (HttpContext.Current.User.IsInRole("Klient"))
+            {
+                <div class="row">
+                    <div class="col-xs-7 pull-right">
+                        <div class="form-group">
+                            <label>Ilość:</label>
+                            @Html.TextBox("quantity", 1, new { @class = "form-control input-sm", type = "number", min = 1, step = 1 })
+                            @Html.ValidationMessage("quantity")
+                        </div>
+                    </div>
+                </div>
+                    <div class="pull-right"><input type="submit" class="btn btn-success" value="Dodaj do koszyka" /></div>
             }
         </div>
     }
 
-    <span class="lead">@Model.Description</span>
+    <span class="lead">@(Model.Description  ) <br/><br/><br /><br/></span>
 </div>

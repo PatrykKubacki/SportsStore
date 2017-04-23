@@ -9,7 +9,7 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-<div class="navbar navbar-inverse">
+<div class="navbar navbar-inverse navbar-fixed-top">
     <a class="navbar-brand" href="#">
         <span class="hidden-xs">Sklep sportowy</span>
         <div class="visible-xs">Sklep</div>
@@ -18,17 +18,17 @@
     <ul class="nav navbar-nav navbar-right">
         @{
             if (HttpContext.Current.User.Identity.IsAuthenticated) {
-                var email = HttpContext.Current.User.Identity.Name;
+                var email = "Jesteś zalogowany jako:"+HttpContext.Current.User.Identity.Name;
                 <li> @Html.ActionLink(email, "Login", "Account", null, new { @class = "navbar-btn" })</li>
-                <li>@Html.ActionLink("Wyloguj", "Logout", "Account", null, new { @class = "navbar-btn" })</li>
+                <li>@Html.ActionLink("(wyloguj)", "Logout", "Account", null, new { @class = "navbar-btn" })</li>
             } else {
                 <li>
                     <a href="@Url.Action("Register", "Account")" class="nav navbar-btn">
-                     Rejestracja
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                        Rejestracja
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
                 </li>
                 <li>
-                    <a href="@Url.Action("Login", "Account")" class="nav navbar-btn">
+                    <a href="@Url.Action("Login", "Account")" class="nav navbar-btn ">
                         Zaloguj
                         <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
                 </li>
@@ -39,6 +39,7 @@
         @Html.Action("Summary", "Cart")
     }
 </div>
+    <br /><br /><br /><br />
 <div class="visible-xs">
     @Html.Action("Menu", "Nav", new { horizontalLayout = true })
 </div>

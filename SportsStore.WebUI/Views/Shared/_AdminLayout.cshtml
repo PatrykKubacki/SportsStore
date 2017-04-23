@@ -15,44 +15,49 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <ul class="nav navbar-nav navbar-right">
-                <li>@Html.ActionLink("Produkty", "Index", "Product")</li>
-                <li>@Html.ActionLink("Kategorie produktów", "Index", "Category")</li>
-                <li>@Html.ActionLink("Role", "Index", "Role")</li>
-                <li>@Html.ActionLink("Użytkownicy", "Index", "User")</li>
-                <li>@Html.ActionLink("Adresy", "Index", "Addres")</li>
-                <li>@Html.ActionLink("Miasta", "Index", "City")</li>
-            </ul>
-            <a class="navbar-brand" href="#">Panel Administracyjny</a>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-            @{
-                if (HttpContext.Current.User.Identity.IsAuthenticated) {
-                    var userName = HttpContext.Current.User.Identity.Name;
-                    <li> @Html.ActionLink(userName, "Login", "Account", null, new { @class = "navbar-btn" })</li>
-                    <li>@Html.ActionLink("Wyloguj", "Logout", "Account", null, new { @class = "navbar-btn" })</li>
-                } else {
-                    <li>
-                        <a href="@Url.Action("Register", "Account")" class="nav navbar-btn">
-                            Rejestracja
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Login", "Account")" class="nav navbar-btn">
-                            Zaloguj
-                            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-                        </a>
-                    </li>
-                }
+<nav class="navbar navbar-default navbar-fixed-top">
+    <ul class="nav navbar-nav navbar-right">
+        @{
+            if (HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var userName = HttpContext.Current.User.Identity.Name;
+                <li> @Html.ActionLink(userName, "Login", "Account", null, new { @class = "navbar-btn" })</li>
+                <li>@Html.ActionLink("Wyloguj", "Logout", "Account", null, new { @class = "navbar-btn" })</li>
             }
-        </ul>
-    </div>
+            else
+            {
+                <li>
+                    <a href="@Url.Action("Register", "Account")" class="nav navbar-btn">
+                        Rejestracja
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Login", "Account")" class="nav navbar-btn">
+                        Zaloguj
+                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+       
+    <ul class="nav navbar-nav navbar-left">
+        <li><a class="navbar-brand" href="#">Panel Administracyjny</a></li>
+        <li>@Html.ActionLink("Produkty", "Index", "Product", null, new { @class = "nav navbar-btn" })</li>
+        <li>@Html.ActionLink("Kategorie produktów", "Index", "Category", null, new { @class = "nav navbar-btn" })</li>
+        <li>@Html.ActionLink("Role", "Index", "Role", null, new { @class = "nav navbar-btn" })</li>
+        <li>@Html.ActionLink("Użytkownicy", "Index", "User", null, new { @class = "nav navbar-btn" })</li>
+        <li>@Html.ActionLink("Adresy", "Index", "Addres", null, new { @class = "nav navbar-btn" })</li>
+        <li>@Html.ActionLink("Miasta", "Index", "City", null, new { @class = "nav navbar-btn" })</li>
+    </ul>
+            
+       
+       
+    
 
 </nav>
+<br/><br/><br/>
 <div>
     @if (TempData["message"] != null) {
         <div class="alert alert-success">@TempData["message"]</div>

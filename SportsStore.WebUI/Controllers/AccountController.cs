@@ -177,5 +177,24 @@ namespace SportsStore.WebUI.Controllers
         {
             return new City{Id = 0, Name = name};
         }
+
+        public ActionResult ChangePassword(int Id)
+        {
+            ViewBag.Id = Id;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(int Id, ChangePasswordViewModel model)
+        {
+            ViewBag.Id = Id;
+            if (!ModelState.IsValid) return View(model);
+
+            _userRepository.ChangePassword(Id, model.NewPassword);
+            TempData["message"] = "Zmieniono pomyślnie hasło";
+
+            return RedirectToAction("Login");
+        }
+
     }
 }

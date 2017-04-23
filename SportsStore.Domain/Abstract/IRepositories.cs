@@ -51,6 +51,7 @@ namespace SportsStore.Domain.Abstract
         void SaveUser(User user);
         User DeleteUser(int Id);
         void ConfirmEmail(string email);
+        void ChangePassword(int Id, string password);
     }
 
 

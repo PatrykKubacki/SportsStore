@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web;
+using System.Web.Mvc;
 using SportsStore.Domain.Data;
 
 namespace SportsStore.WebUI.Infrastructure.Binders
@@ -11,16 +13,19 @@ namespace SportsStore.WebUI.Infrastructure.Binders
 		public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
 		{
 			Cart cart = null;
+		    var user = HttpContext.Current.User.Identity.Name;
 			if (controllerContext.HttpContext.Session != null)
 				cart = (Cart)controllerContext.HttpContext.Session[_sessionKey];
 
-			if (cart != null) return cart;
+			if (cart != null &&  controllerContext.HttpContext.Session["User"].Equals(user)) return cart;
 
 			cart = new Cart();
-			if (controllerContext.HttpContext.Session != null)
+		    if (controllerContext.HttpContext.Session != null)
+		    {
 				controllerContext.HttpContext.Session[_sessionKey] = cart;
-
-			return cart;
+		        controllerContext.HttpContext.Session["User"] = user;
+		    }
+            return cart;
 		}
 
 	}

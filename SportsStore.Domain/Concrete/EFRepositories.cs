@@ -194,6 +194,15 @@ namespace SportsStore.Domain.Concrete
             dbEntry.Confirmed = true;
             _context.SaveChanges();
         }
+
+        public void ChangePassword(int Id, string password)
+        {
+            var dbEntry = _context.Users.Find(Id);
+            if (dbEntry == null) return;
+
+            dbEntry.Password = password;
+            _context.SaveChanges();
+        }
     }
 
 

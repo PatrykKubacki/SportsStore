@@ -28,3 +28,6 @@
 	float: !important;
 	margin-right: 15px;margin-left: 15px;
 }
+#summary {
+    padding-left: 5px
+}

@@ -1,4 +1,5 @@
-﻿@using SportsStore.WebUI.Models
+﻿@using System.Globalization
+@using SportsStore.WebUI.Models
 @model CartIndexViewModel
 
 @{
@@ -20,8 +21,8 @@
 		<tr>
 			<td class="text-center">@line.Quantity</td>
 			<td class="text-left">@line.Product.Name</td>
-			<td class="text-right">@line.Product.Price.ToString("c")</td>
-			<td class="text-right">@((line.Quantity * line.Product.Price).ToString("c")).</td>
+			<td class="text-right">@line.Product.Price.ToString("c", CultureInfo.CreateSpecificCulture("pl-pl"))</td>
+			<td class="text-right">@((line.Quantity * line.Product.Price).ToString("c",CultureInfo.CreateSpecificCulture("pl-pl"))).</td>
 			<td>
 			@using (Html.BeginForm("RemoveFromCart","Cart")) {
 				@Html.Hidden("Id",line.Product.Id)
@@ -36,7 +37,7 @@
 	<tr>
 		<td colspan="3" class="text-right">Razem:</td>	
 		<td class="text-right">
-			@Model.Cart.ComputeTotalValue().ToString("C")
+			@Model.Cart.ComputeTotalValue().ToString("C", CultureInfo.CreateSpecificCulture("pl-pl"))
 		</td>		
 	</tr>
 	</tfoot>

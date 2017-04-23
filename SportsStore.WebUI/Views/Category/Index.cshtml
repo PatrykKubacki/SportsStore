@@ -8,7 +8,8 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3>Wszystkie Kategorie</h3>
+        <h2>Kategorie</h2>
+        @Html.ActionLink("Dodaj nową kategorię", "Create", "Category", null, new { @class = "btn btn-primary" })
     </div>
     <div class="panel-body">
         <table class="table table-striped table-condensed table-bordered">
@@ -30,6 +31,5 @@
                 </tr>
             }
         </table>
-        @Html.ActionLink("Dodaj nową kategorię", "Create", "Category", null, new { @class = "btn btn-primary" })
     </div>
 </div>

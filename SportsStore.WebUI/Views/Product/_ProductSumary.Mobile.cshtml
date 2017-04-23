@@ -1,4 +1,5 @@
-﻿@using SportsStore.Domain.Data
+﻿@using System.Globalization
+@using SportsStore.Domain.Data
 @model Product
 	
 <div data-role="collapsible" data-collapsed="false" data-content-theme="c">
@@ -10,7 +11,7 @@
 			@Model.Description
 		</div>
 		<div class="ui-block-b">
-			<strong>@Model.Price.ToString("C")</strong>
+			<strong>@Model.Price.ToString() Zł.</strong>
 		</div>
 		
 		<div class="ui-block-c">

@@ -8,7 +8,8 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3>Wszyscy użytkownicy</h3>
+        <h2>Użytkownicy</h2>
+        @Html.ActionLink("Dodaj nowego użytkownika", "Create", "User", null, new { @class = "btn btn-primary" })
     </div>
     <div class="panel-body">
         <table class="table table-striped table-condensed table-bordered">
@@ -16,7 +17,6 @@
                 <th>Imie</th>
                 <th>Nazwisko</th>
                 <th>Telefon</th>
-                <th>Hasło</th>
                 <th>Email</th>
                 <th>Rola</th>
                 <th>Adres</th>
@@ -27,10 +27,9 @@
                     <td>@Html.ActionLink(item.FirstName, "Edit", new { item.Id })</td>
                     <td>@item.LastName</td>
                     <td>@item.Phone</td>
-                    <td>@item.Password</td>
                     <td>@item.Email</td>
                     <td>@item.Role.Name</td>
-                    <td>@(item.Address.Street+" "+item.Address.Number +" "+item.Address.Code)</td>
+                    <td>@(item.Address.Street + " " + item.Address.Number + " " + item.Address.Code)</td>
                     <td>
                         @using (Html.BeginForm("Delete", "User")) {
                             @Html.Hidden("Id", item.Id)
@@ -40,6 +39,5 @@
                 </tr>
             }
         </table>
-        @Html.ActionLink("Dodaj nowego użytkownika","Create","User",null,new {@class="btn btn-primary"})
     </div>
 </div>
