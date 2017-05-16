@@ -19,7 +19,7 @@ namespace SportsStore.Domain.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.Orders = new HashSet<Order>();
+            this.OrderLists = new HashSet<OrderList>();
         }
     
         public int Id { get; set; }
@@ -42,12 +42,11 @@ namespace SportsStore.Domain.Data
         [Required(ErrorMessage = "Wybierz kategorie")]
         [Display(Name = "Kategoria")]
         public Nullable<int> CategoryId { get; set; }
-
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }
     
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<OrderList> OrderLists { get; set; }
     }
 }

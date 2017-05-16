@@ -12,22 +12,19 @@ namespace SportsStore.Domain.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Order
+    public partial class Status
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Order()
+        public Status()
         {
-            this.OrderLists = new HashSet<OrderList>();
+            this.Orders = new HashSet<Order>();
         }
     
         public int Id { get; set; }
-        public System.DateTime Date { get; set; }
-        public Nullable<int> StatusId { get; set; }
-        public Nullable<int> UserId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     
-        public virtual Status Status { get; set; }
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderList> OrderLists { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

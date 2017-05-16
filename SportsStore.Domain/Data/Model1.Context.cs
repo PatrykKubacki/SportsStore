@@ -29,8 +29,10 @@ namespace SportsStore.Domain.Data
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderList> OrderLists { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }

@@ -114,6 +114,9 @@
     <Compile Include="Data\Order.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\OrderList.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Product.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -121,6 +124,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\ShippingDetails.cs" />
+    <Compile Include="Data\Status.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

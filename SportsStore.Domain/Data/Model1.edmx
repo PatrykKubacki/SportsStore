@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SportsStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Model1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="Id" />
@@ -35,6 +35,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="StatusId" Type="int" />
           <Property Name="UserId" Type="int" />
         </EntityType>
         <EntityType Name="OrderList">
@@ -44,6 +45,7 @@
           </Key>
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -63,6 +65,14 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -90,7 +100,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Order__UserId__36B12243">
+        <Association Name="FK__Order__StatusId__7D439ABD">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__UserId__7E37BEF6">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
@@ -162,7 +184,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SportsStoreModelStoreContainer">
+        <EntityContainer Name="Model1StoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
@@ -170,12 +192,17 @@
           <EntitySet Name="OrderList" EntityType="Self.OrderList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Address__CityId__2C3393D0" Association="Self.FK__Address__CityId__2C3393D0">
             <End Role="City" EntitySet="City" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Order__UserId__36B12243" Association="Self.FK__Order__UserId__36B12243">
+          <AssociationSet Name="FK__Order__StatusId__7D439ABD" Association="Self.FK__Order__StatusId__7D439ABD">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__UserId__7E37BEF6" Association="Self.FK__Order__UserId__7E37BEF6">
             <End Role="User" EntitySet="User" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
@@ -200,10 +227,11 @@
             <End Role="OrderList" EntitySet="OrderList" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="SportsStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Model1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="Id" />
@@ -213,8 +241,8 @@
           <Property Name="Code" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Number" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CityId" Type="Int32" />
-          <NavigationProperty Name="City" Relationship="Self.FK__Address__CityId__38996AB5" FromRole="Address" ToRole="City" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__User__AddressId__4222D4EF" FromRole="Address" ToRole="User" />
+          <NavigationProperty Name="City" Relationship="Self.FK__Address__CityId__2C3393D0" FromRole="Address" ToRole="City" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__User__AddressId__30F848ED" FromRole="Address" ToRole="User" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -222,7 +250,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="Self.FK__Product__Categor__44FF419A" FromRole="Category" ToRole="Product" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Product__Categor__59FA5E80" FromRole="Category" ToRole="Product" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -230,7 +258,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Addresses" Relationship="Self.FK__Address__CityId__38996AB5" FromRole="City" ToRole="Address" />
+          <NavigationProperty Name="Addresses" Relationship="Self.FK__Address__CityId__2C3393D0" FromRole="City" ToRole="Address" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -238,9 +266,22 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StatusId" Type="Int32" />
           <Property Name="UserId" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Order__UserId__47DBAE45" FromRole="Order" ToRole="User" />
-          <NavigationProperty Name="Products" Relationship="Self.OrderList" FromRole="Order" ToRole="Product" />
+          <NavigationProperty Name="Status" Relationship="Self.FK__Order__StatusId__7D439ABD" FromRole="Order" ToRole="Status" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Order__UserId__7E37BEF6" FromRole="Order" ToRole="User" />
+          <NavigationProperty Name="OrderLists" Relationship="Self.FK_order" FromRole="Order" ToRole="OrderList" />
+        </EntityType>
+        <EntityType Name="OrderList">
+          <Key>
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_order" FromRole="OrderList" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_product" FromRole="OrderList" ToRole="Product" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -253,8 +294,8 @@
           <Property Name="CategoryId" Type="Int32" />
           <Property Name="ImageData" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="ImageMimeType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Category" Relationship="Self.FK__Product__Categor__44FF419A" FromRole="Product" ToRole="Category" />
-          <NavigationProperty Name="Orders" Relationship="Self.OrderList" FromRole="Product" ToRole="Order" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Product__Categor__59FA5E80" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="OrderLists" Relationship="Self.FK_product" FromRole="Product" ToRole="OrderList" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -262,7 +303,16 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__User__RoleId__412EB0B6" FromRole="Role" ToRole="User" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__User__RoleId__300424B4" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Order__StatusId__7D439ABD" FromRole="Status" ToRole="Order" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -276,12 +326,12 @@
           <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RoleId" Type="Int32" />
           <Property Name="AddressId" Type="Int32" />
-          <NavigationProperty Name="Address" Relationship="Self.FK__User__AddressId__4222D4EF" FromRole="User" ToRole="Address" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK__Order__UserId__47DBAE45" FromRole="User" ToRole="Order" />
-          <NavigationProperty Name="Role" Relationship="Self.FK__User__RoleId__412EB0B6" FromRole="User" ToRole="Role" />
           <Property Name="Confirmed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.FK__User__AddressId__30F848ED" FromRole="User" ToRole="Address" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Order__UserId__7E37BEF6" FromRole="User" ToRole="Order" />
+          <NavigationProperty Name="Role" Relationship="Self.FK__User__RoleId__300424B4" FromRole="User" ToRole="Role" />
         </EntityType>
-        <Association Name="FK__Address__CityId__38996AB5">
+        <Association Name="FK__Address__CityId__2C3393D0">
           <End Role="City" Type="Self.City" Multiplicity="0..1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
@@ -293,7 +343,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__AddressId__4222D4EF">
+        <Association Name="FK__User__AddressId__30F848ED">
           <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -305,7 +355,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__Categor__44FF419A">
+        <Association Name="FK__Product__Categor__59FA5E80">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -317,7 +367,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Order__UserId__47DBAE45">
+        <Association Name="FK__Order__StatusId__7D439ABD">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__UserId__7E37BEF6">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
@@ -329,7 +391,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__RoleId__412EB0B6">
+        <Association Name="FK_order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderList" Type="Self.OrderList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderList">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="OrderList" Type="Self.OrderList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderList">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__RoleId__300424B4">
           <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -341,41 +427,47 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="OrderList">
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Cities" EntityType="Self.City" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="OrderLists" EntityType="Self.OrderList" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK__Address__CityId__38996AB5" Association="Self.FK__Address__CityId__38996AB5">
+          <AssociationSet Name="FK__Address__CityId__2C3393D0" Association="Self.FK__Address__CityId__2C3393D0">
             <End Role="City" EntitySet="Cities" />
             <End Role="Address" EntitySet="Addresses" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__AddressId__4222D4EF" Association="Self.FK__User__AddressId__4222D4EF">
+          <AssociationSet Name="FK__User__AddressId__30F848ED" Association="Self.FK__User__AddressId__30F848ED">
             <End Role="Address" EntitySet="Addresses" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Product__Categor__44FF419A" Association="Self.FK__Product__Categor__44FF419A">
+          <AssociationSet Name="FK__Product__Categor__59FA5E80" Association="Self.FK__Product__Categor__59FA5E80">
             <End Role="Category" EntitySet="Categories" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__Order__UserId__47DBAE45" Association="Self.FK__Order__UserId__47DBAE45">
+          <AssociationSet Name="FK__Order__StatusId__7D439ABD" Association="Self.FK__Order__StatusId__7D439ABD">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__UserId__7E37BEF6" Association="Self.FK__Order__UserId__7E37BEF6">
             <End Role="User" EntitySet="Users" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__RoleId__412EB0B6" Association="Self.FK__User__RoleId__412EB0B6">
+          <AssociationSet Name="FK_order" Association="Self.FK_order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderList" EntitySet="OrderLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product" Association="Self.FK_product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderList" EntitySet="OrderLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__RoleId__300424B4" Association="Self.FK__User__RoleId__300424B4">
             <End Role="Role" EntitySet="Roles" />
             <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="OrderList" Association="Self.OrderList">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="Product" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -383,9 +475,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SportsStoreModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="SportsStoreModel.Address">
+            <EntityTypeMapping TypeName="Model1.Address">
               <MappingFragment StoreEntitySet="Address">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Street" ColumnName="Street" />
@@ -396,7 +488,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="SportsStoreModel.Category">
+            <EntityTypeMapping TypeName="Model1.Category">
               <MappingFragment StoreEntitySet="Category">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -404,7 +496,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Cities">
-            <EntityTypeMapping TypeName="SportsStoreModel.City">
+            <EntityTypeMapping TypeName="Model1.City">
               <MappingFragment StoreEntitySet="City">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -412,16 +504,26 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="SportsStoreModel.Order">
+            <EntityTypeMapping TypeName="Model1.Order">
               <MappingFragment StoreEntitySet="Order">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="OrderLists">
+            <EntityTypeMapping TypeName="Model1.OrderList">
+              <MappingFragment StoreEntitySet="OrderList">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="SportsStoreModel.Product">
+            <EntityTypeMapping TypeName="Model1.Product">
               <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -434,17 +536,25 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="SportsStoreModel.Role">
+            <EntityTypeMapping TypeName="Model1.Role">
               <MappingFragment StoreEntitySet="Role">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="Model1.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="SportsStoreModel.User">
+            <EntityTypeMapping TypeName="Model1.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -453,17 +563,10 @@
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="OrderList" TypeName="SportsStoreModel.OrderList" StoreEntitySet="OrderList">
-            <EndProperty Name="Order">
-              <ScalarProperty Name="Id" ColumnName="OrderId" />
-            </EndProperty>
-            <EndProperty Name="Product">
-              <ScalarProperty Name="Id" ColumnName="ProductId" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
