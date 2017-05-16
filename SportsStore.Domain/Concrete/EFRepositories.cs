@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SportsStore.Domain.Abstract;
 using SportsStore.Domain.Data;
@@ -202,6 +203,19 @@ namespace SportsStore.Domain.Concrete
 
             dbEntry.Password = password;
             _context.SaveChanges();
+        }
+
+        public string ResetPassword(int Id)
+        {
+            var random = new Random();
+            const string input = "ABCDEFGHIJKLMNOPRSTUWZ";
+            var buffer = new char[6];
+            for (var i = 0; i < 6; i++)
+                buffer[i] = input[random.Next(input.Length)];
+
+            var newPassword = new string(buffer);
+            ChangePassword(Id,newPassword);
+            return newPassword;
         }
     }
 

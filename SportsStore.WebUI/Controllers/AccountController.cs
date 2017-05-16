@@ -132,7 +132,8 @@ namespace SportsStore.WebUI.Controllers
                 RedirectToAction("Login");
 
             ViewBag.Email = email;
-            _emailSender.SendMessage(email);
+            var body = $"Twój login to: {email}\nPotwiedz swój adres e-mail http://localhost:3416/Account/Confirmation?email={email} \nW przeciwnym razie zignoruj te wiadomość.";
+            _emailSender.SendMessage(email,"Pomyślnie Zarejestrowano", body);
             return View();
         }
 
@@ -192,6 +193,29 @@ namespace SportsStore.WebUI.Controllers
 
             _userRepository.ChangePassword(Id, model.NewPassword);
             TempData["message"] = "Zmieniono pomyślnie hasło";
+
+            return RedirectToAction("Login");
+        }
+
+        [AllowAnonymous]
+        public ActionResult ForgottenPassword()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult ForgottenPassword(ForgottenPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var user = _userRepository.Users.FirstOrDefault(u => u.Email == model.Email);
+            if (user == null) return RedirectToAction("Login");
+
+            var newPasssword = _userRepository.ResetPassword(user.Id);
+            var body = $"Twoje hasło zostało zmienione na {newPasssword}\nMożesz teraz sie zalogować używając tego hasła";
+            _emailSender.SendMessage(user.Email,"Resetowanie hasła",body);
 
             return RedirectToAction("Login");
         }

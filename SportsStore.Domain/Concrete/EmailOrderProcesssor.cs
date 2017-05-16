@@ -93,7 +93,7 @@ namespace SportsStore.Domain.Concrete
             _settings = settings;
         }
 
-        public void SendMessage(string email)
+        public void SendMessage(string email,string subject, string body)
         {
             using (var smtpClinet = new SmtpClient())
             {
@@ -103,9 +103,10 @@ namespace SportsStore.Domain.Concrete
                 smtpClinet.UseDefaultCredentials = false;
                 smtpClinet.Credentials = new NetworkCredential(_settings.Username, _settings.Password);
 
-                var mailMessage = new MailMessage(_settings.MailFromAddress, email, "Pomyślnie Zarejestrowano", $"Twój login to: {email}\nPotwiedz swój adres e-mail http://localhost:3416/Account/Confirmation?email={email} \nW przeciwnym razie zignoruj te wiadomość.");
+                var mailMessage = new MailMessage(_settings.MailFromAddress, email, subject, body);
                 smtpClinet.Send(mailMessage);
             } 
         }
+
     }
 }

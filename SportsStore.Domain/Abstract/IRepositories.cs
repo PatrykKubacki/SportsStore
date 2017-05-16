@@ -52,6 +52,7 @@ namespace SportsStore.Domain.Abstract
         User DeleteUser(int Id);
         void ConfirmEmail(string email);
         void ChangePassword(int Id, string password);
+        string ResetPassword(int Id);
     }
 
 
