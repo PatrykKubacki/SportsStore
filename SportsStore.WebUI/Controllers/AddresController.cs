@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SportsStore.Domain.Abstract;
 using SportsStore.Domain.Data;
+using SportsStore.WebUI.Models;
 
 namespace SportsStore.WebUI.Controllers
 {
@@ -12,15 +13,28 @@ namespace SportsStore.WebUI.Controllers
     public class AddresController : Controller
     {
         IAddressRepository _repository;
+        public int PageSize = 4;
 
         public AddresController(IAddressRepository repository)
         {
             _repository = repository;
         }
 
-        public ViewResult Index()
+        public ViewResult Index(int page = 1)
         {
-            return View(_repository.Addresses);
+            var model = new ListViewModel<Address>
+            {
+                Elements = _repository.Addresses.OrderBy(p => p.Id)
+                                      .Skip((page - 1) * PageSize)
+                                      .Take(PageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = _repository.Addresses.Count()
+                }
+            };
+            return View(model);
         }
 
         public ViewResult Create()

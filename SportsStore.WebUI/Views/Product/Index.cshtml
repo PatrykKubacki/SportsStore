@@ -1,6 +1,6 @@
 ﻿@using System.Globalization
-@using SportsStore.Domain.Data
-@model IEnumerable<Product>
+@using SportsStore.WebUI.Models
+@model ProductListViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -21,7 +21,7 @@
                 <th class="NumericCol">Cena</th>
                 <th>Akcje</th>
             </tr>
-            @foreach (var item in Model) {
+            @foreach (var item in Model.Elements) {
                 <tr>
                     <td>@Html.ActionLink(item.Name, "Edit", new { item.Id })</td>
                     <td>@item.Description</td>
@@ -36,5 +36,8 @@
                 </tr>
             }
         </table>
+        <div class="btn-group pull-right">
+            @Html.PageLinks(Model.PagingInfo, x=> Url.Action("Index",new {page = x, category = Model.CurrentCategory}))
+        </div>
     </div>
 </div>

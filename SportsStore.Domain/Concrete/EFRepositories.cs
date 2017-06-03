@@ -259,4 +259,38 @@ namespace SportsStore.Domain.Concrete
         }
     }
 
+    public class EFStatusRepository : IStatusRepository
+    {
+        Entities _context = new Entities();
+        public IEnumerable<Status> Statuses => _context.Status;
+
+        public void SaveStatus(Status status)
+        {
+            if (status.Id == 0)
+            {
+                _context.Status.Add(status);
+            }
+            else
+            {
+                var dbEnty = _context.Status.Find(status.Id);
+                if (dbEnty != null)
+                { 
+                    dbEnty.Name = status.Name;
+                    dbEnty.Description = status.Description;
+                }
+            }
+            _context.SaveChanges();
+        }
+
+        public Status DeleteStatus(int Id)
+        {
+            var dbEntry = _context.Status.Find(Id);
+            if (dbEntry == null) return null;
+
+            _context.Status.Remove(dbEntry);
+            _context.SaveChanges();
+            return dbEntry;
+        }
+    }
+
 }

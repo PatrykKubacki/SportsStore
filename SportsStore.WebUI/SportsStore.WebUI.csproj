@@ -194,6 +194,7 @@
     <Compile Include="Controllers\NavController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -241,8 +242,8 @@
     <Content Include="Views\City\Edit.cshtml" />
     <Content Include="Views\Addres\Edit.cshtml" />
     <Content Include="Views\Addres\Index.cshtml" />
-    <Content Include="Views\User\Edit.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Status\Edit.cshtml" />
+    <Content Include="Views\Status\Index.cshtml" />
     <Content Include="Views\Account\LoginResult.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Confirm.cshtml" />
@@ -250,6 +251,8 @@
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_UserPanelLayout.cshtml" />
     <Content Include="Views\Account\ForgottenPassword.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

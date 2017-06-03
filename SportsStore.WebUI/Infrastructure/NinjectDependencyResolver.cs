@@ -39,6 +39,7 @@ namespace SportsStore.WebUI.Infrastructure
 			_kernel.Bind<IRoleRepository>().To<EFRoleRepository>();
 			_kernel.Bind<IUserRepository>().To<EFUserRepository>();
 			_kernel.Bind<ICityRepository>().To<EFCityRepository>();
+			_kernel.Bind<IStatusRepository>().To<EFStatusRepository>();
 		    _kernel.Bind<IAuthentication>().To<Authentication>();
 		    _kernel.Bind<IEmailSender>().To<EmailSender>();
 

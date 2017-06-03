@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace SportsStore.Domain.Data
 {
     using System;
@@ -21,7 +23,13 @@ namespace SportsStore.Domain.Data
         }
     
         public int Id { get; set; }
+
+        [Display(Name = "Nazwa")]
+        [Required(ErrorMessage = "Podaæ nazwê statusu")]
         public string Name { get; set; }
+
+        [Display(Name = "Opis")]
+        [Required(ErrorMessage = "Podaj opis statusu")]
         public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

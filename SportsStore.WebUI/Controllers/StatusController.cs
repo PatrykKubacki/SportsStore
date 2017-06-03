@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using SportsStore.Domain.Abstract;
 using SportsStore.Domain.Data;
@@ -9,29 +6,31 @@ using SportsStore.WebUI.Models;
 
 namespace SportsStore.WebUI.Controllers
 {
+
     [Authorize(Roles = "Administrator")]
-    public class CityController : Controller
+    public class StatusController : Controller
     {
-        ICityRepository _repository;
+        IStatusRepository _repository;
         public int PageSize = 4;
 
-        public CityController(ICityRepository repository)
+        public StatusController(IStatusRepository repository)
         {
             _repository = repository;
         }
 
+        [Authorize(Roles = "Administrator")]
         public ViewResult Index(int page = 1)
         {
-            var model = new ListViewModel<City>
+            var model = new ListViewModel<Status>
             {
-                Elements = _repository.Cities.OrderBy(p => p.Id)
+                Elements = _repository.Statuses.OrderBy(p => p.Id)
                                       .Skip((page - 1) * PageSize)
                                       .Take(PageSize),
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
-                    TotalItems = _repository.Cities.Count()
+                    TotalItems = _repository.Statuses.Count()
                 }
             };
             return View(model);
@@ -39,33 +38,34 @@ namespace SportsStore.WebUI.Controllers
 
         public ViewResult Create()
         {
-            return View("Edit", new City());
+            return View("Edit", new Status());
         }
 
         public ViewResult Edit(int Id)
         {
-            City city = _repository.Cities.FirstOrDefault(p => p.Id == Id);
-            return View(city);
+            var status = _repository.Statuses.FirstOrDefault(p => p.Id == Id);
+            return View(status);
         }
 
         [HttpPost]
-        public ActionResult Edit(City city)
+        public ActionResult Edit(Status status)
         {
-            if (!ModelState.IsValid) return View(city);
+            if (!ModelState.IsValid) return View(status);
 
-            _repository.SaveCity(city);
-            TempData["message"] = $"Zapisano {city.Name}";
+            _repository.SaveStatus(status);
+            TempData["message"] = $"Zapisano {status.Name}";
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult Delete(int Id)
         {
-            City deletedCity = _repository.DeleteCity(Id);
-            if (deletedCity != null)
-                TempData["message"] = $"Usunięto {deletedCity.Name}";
+            var deletedStatus = _repository.DeleteStatus(Id);
+            if (deletedStatus != null)
+                TempData["message"] = $"Usunięto {deletedStatus.Name}";
 
             return RedirectToAction("Index");
         }
     }
+
 }

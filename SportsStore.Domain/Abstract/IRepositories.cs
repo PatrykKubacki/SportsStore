@@ -64,4 +64,11 @@ namespace SportsStore.Domain.Abstract
         Address DeleteAddress(int Id);
     }
 
+    public interface IStatusRepository
+    {
+        IEnumerable<Status> Statuses { get; }
+        void SaveStatus(Status status);
+        Status DeleteStatus(int Id);
+    }
+
 }

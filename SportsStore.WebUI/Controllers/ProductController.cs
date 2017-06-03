@@ -24,7 +24,7 @@ namespace SportsStore.WebUI.Controllers
 		{
 			var model = new ProductListViewModel
 			{
-				Products = _repository.Products.Where(p => p.Category?.Name == category || category == null)
+			    Elements = _repository.Products.Where(p => p.Category?.Name == category || category == null)
 											   .OrderBy(p => p.Id)
 										       .Skip((page - 1) * PageSize)
 											   .Take(PageSize),
@@ -52,9 +52,21 @@ namespace SportsStore.WebUI.Controllers
 	    }
 
         [Authorize(Roles = "Administrator")]
-        public ViewResult Index()
+        public ViewResult Index(int page = 1)
         {
-            return View(_repository.Products);
+            var model = new ProductListViewModel
+            {
+                Elements = _repository.Products.OrderBy(p=>p.Id)
+                                                .Skip((page-1) * PageSize)
+                                                .Take(PageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = _repository.Products.Count()
+                }
+            };
+            return View(model);
         }
 
         [Authorize(Roles = "Administrator")]

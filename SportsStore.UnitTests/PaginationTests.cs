@@ -32,7 +32,7 @@ namespace SportsStore.UnitTests
 
 			var result = (ProductListViewModel)controller.List(null, 2).Model;
 
-			var products = result.Products.ToArray();
+			var products = result.Elements.ToArray();
 			Assert.IsTrue(products.Length == 2);
 			Assert.IsTrue(products[0].Name == "P4");
 			Assert.IsTrue(products[1].Name == "P5");

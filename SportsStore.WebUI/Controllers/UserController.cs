@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SportsStore.Domain.Abstract;
 using SportsStore.Domain.Data;
+using SportsStore.WebUI.Models;
 
 namespace SportsStore.WebUI.Controllers
 {
@@ -20,10 +21,21 @@ namespace SportsStore.WebUI.Controllers
 
         }
         [Authorize(Roles = "Administrator")]
-        public ViewResult Index()
+        public ViewResult Index(int page = 1)
         {
-
-            return View(_repository.Users);
+            var model = new ListViewModel<User>
+            {
+                Elements = _repository.Users.OrderBy(p => p.Id)
+                                      .Skip((page - 1) * PageSize)
+                                      .Take(PageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = _repository.Users.Count()
+                }
+            };
+            return View(model);
         }
         public ViewResult Create()
         {

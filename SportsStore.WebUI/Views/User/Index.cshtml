@@ -1,5 +1,6 @@
 ﻿@using SportsStore.Domain.Data
-@model IEnumerable<User>
+@using SportsStore.WebUI.Models
+@model ListViewModel<User>
 
 @{
     ViewBag.Title = "Index";
@@ -22,7 +23,7 @@
                 <th>Adres</th>
                 <th>Akcje</th>
             </tr>
-            @foreach (var item in Model) {
+            @foreach (var item in Model.Elements) {
                 <tr>
                     <td>@Html.ActionLink(item.FirstName, "Edit", new { item.Id })</td>
                     <td>@item.LastName</td>
@@ -39,5 +40,8 @@
                 </tr>
             }
         </table>
+        <div class="btn-group pull-right">
+            @Html.PageLinks(Model.PagingInfo, x => Url.Action("Index", new { page = x }))
+        </div>
     </div>
 </div>

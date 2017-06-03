@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SportsStore.Domain.Abstract;
 using SportsStore.Domain.Data;
+using SportsStore.WebUI.Models;
 
 namespace SportsStore.WebUI.Controllers
 {
@@ -12,15 +13,28 @@ namespace SportsStore.WebUI.Controllers
     public class CategoryController : Controller
     {
         ICategoryRepository _repository;
+        public int PageSize = 4;
 
         public CategoryController(ICategoryRepository repository)
         {
             _repository = repository;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            return View(_repository.Categories);
+            var model = new ListViewModel<Category>
+            {
+                Elements = _repository.Categories.OrderBy(p => p.Id)
+                                      .Skip((page - 1) * PageSize)
+                                      .Take(PageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = _repository.Categories.Count()
+                }
+            };
+            return View(model);
         }
 
         public ViewResult Create()

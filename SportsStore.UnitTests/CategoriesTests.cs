@@ -27,7 +27,7 @@ namespace SportsStore.UnitTests
 			});
 			var controller = new ProductController(mock.Object) { PageSize = 3 };
 
-			var result = ((ProductListViewModel)controller.List("CAT2").Model).Products.ToArray();
+			var result = ((ProductListViewModel)controller.List("CAT2").Model).Elements.ToArray();
 
 			Assert.AreEqual(result.Length, 2);
 			Assert.IsTrue(result[0].Name == "P2" && result[0].Category.Name == "CAT2");
