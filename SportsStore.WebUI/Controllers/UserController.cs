@@ -47,7 +47,7 @@ namespace SportsStore.WebUI.Controllers
         public ViewResult Edit(int Id)
         {
             User user = _repository.Users.FirstOrDefault(p => p.Id == Id);
-            ViewBag.Addresses = new SelectList(_repository.Addresses, "Id", "Street", user?.AddressId);
+            ViewBag.Addresses = new SelectList(_repository.Addresses, "Id", "FullName", user?.AddressId);
             ViewBag.Roles = new SelectList(_repository.Roles, "Id", "Name", user?.RoleId);
             return View(user);
         }

@@ -42,6 +42,8 @@ namespace SportsStore.Domain.Data
         [Required(ErrorMessage = "Wybierz miasto")]
         [Display(Name = "Miasto")]
         public Nullable<int> CityId { get; set; }
+
+        public String FullName => $"{Code} {City.Name} {Street} {Number}";
     
         public virtual City City { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

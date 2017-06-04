@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace SportsStore.Domain.Data
 {
     using System;
@@ -22,6 +24,9 @@ namespace SportsStore.Domain.Data
     
         public int Id { get; set; }
         public System.DateTime Date { get; set; }
+
+        [Required(ErrorMessage = "Wybierz status")]
+        [Display(Name = "Status")]
         public Nullable<int> StatusId { get; set; }
         public Nullable<int> UserId { get; set; }
         public string Name { get; set; }

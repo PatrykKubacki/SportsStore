@@ -26,10 +26,12 @@ namespace SportsStore.Domain.Data
 
         [Display(Name = "Nazwa")]
         [Required(ErrorMessage = "Podaæ nazwê statusu")]
+        [StringLength(30, ErrorMessage = "Maksymalnie 30 znaków")]
         public string Name { get; set; }
 
         [Display(Name = "Opis")]
         [Required(ErrorMessage = "Podaj opis statusu")]
+        [StringLength(200, ErrorMessage = "Maksymalnie 200 znaków")]
         public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

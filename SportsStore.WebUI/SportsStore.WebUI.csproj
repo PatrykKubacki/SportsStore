@@ -263,6 +263,9 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\OrderList\Index.cshtml" />
     <Content Include="Views\OrderList\CreatePdf.cshtml" />
+    <Content Include="Views\Order\List.cshtml" />
+    <Content Include="Views\Order\Edit.cshtml" />
+    <Content Include="Views\Product\FilteredList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -111,10 +111,20 @@ namespace SportsStore.Domain.Concrete
     {
         Entities _context = new Entities();
         public IEnumerable<Order> Orders => _context.Orders;
+        public IEnumerable<Status> Statues => _context.Status;
 
         public void SaveOrder(Order order)
         {
-            _context.Orders.Add(order);
+            if (order.Id == 0)
+            {
+                _context.Orders.Add(order);
+            }
+            else
+            {
+                var dbEnty = _context.Orders.Find(order.Id);
+                if (dbEnty != null)
+                    dbEnty.StatusId = order.StatusId;
+            }
             _context.SaveChanges();
         }
     }

@@ -33,5 +33,41 @@ namespace SportsStore.WebUI.Controllers
             };
             return View(model);
         }
+
+        public ViewResult List(int page = 1)
+        {
+            var model = new ListViewModel<Order>
+            {
+                Elements = _orderRepository.Orders.OrderBy(p => p.Date)
+                                      .Skip((page - 1) * PageSize)
+                                      .Take(PageSize),
+
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = _orderRepository.Orders.Count()
+                }
+            };
+            return View(model);
+        }
+
+        public ViewResult Edit(int Id)
+        {
+            var model = _orderRepository.Orders.FirstOrDefault(p => p.Id == Id);
+            ViewBag.Statues = new SelectList(_orderRepository.Statues, "Id", "Name", model?.StatusId);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Order order)
+        {
+            if (!ModelState.IsValid) return View(order);
+
+            _orderRepository.SaveOrder(order);
+            TempData["message"] = $"Zapisano {order.Name}";
+            return RedirectToAction("List");
+        }
+
     }
 }

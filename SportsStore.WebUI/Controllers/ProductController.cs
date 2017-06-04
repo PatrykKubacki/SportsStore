@@ -43,6 +43,26 @@ namespace SportsStore.WebUI.Controllers
 		}
 
         [AllowAnonymous]
+        public ViewResult FilteredList(string search = "",int page = 1)
+		{
+			var model = new ProductListViewModel
+			{
+			    Elements = _repository.Products.Where(p => p.Name.Contains(search))
+											   .OrderBy(p => p.Id)
+										       .Skip((page - 1) * PageSize)
+											   .Take(PageSize),
+				PagingInfo = new PagingInfo
+				{
+					CurrentPage = page,
+					ItemsPerPage = PageSize,
+					TotalItems = _repository.Products.Count(p => p.Name.Contains(search)) 
+				},
+
+			};
+			return View(model);
+		}
+
+        [AllowAnonymous]
         public FileContentResult GetImage(int Id)
 	    {
 	        Product product = _repository.Products.FirstOrDefault(p => p.Id == Id);

@@ -45,6 +45,7 @@ namespace SportsStore.Domain.Data
         [Required(ErrorMessage = "Podaj Nazwisko")]
         [Display(Name = "Nazwisko")]
         [StringLength(50, ErrorMessage = "Maksymalnie 50 znaków ")]
+        [RegularExpression("[A-Z][a-z]{2,}", ErrorMessage = "Zaczyna wielka litera i minimum 3 znaki, cyfry niedozwolone")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Podaj numer telefonu")]

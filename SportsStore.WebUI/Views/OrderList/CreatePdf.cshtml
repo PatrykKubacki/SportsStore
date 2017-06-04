@@ -55,7 +55,7 @@
             <h4>Transakcja</h4>
             @{
                 <table class="table table-bordered">
-                    <tr>
+                    <tr class="success" >
                         <th>Nazwa towary lub usługi</th>
                         <th>ilość</th>
                         <th>Jednostka</th>
@@ -78,6 +78,22 @@
                 </table>
                 <h4>Razem do zapłaty: @GetTotalValue(Model).ToString("C", CultureInfo.CreateSpecificCulture("pl"))</h4>
             }
+        </div>
+    </div>
+    <br/> <br/> <br/>
+    <div class="row">
+        <div class="col-xs-6">
+            <h4>......................................................................</h4>
+            <p>
+                Osoba upoważniona do odbioru 
+            </p>
+        </div>
+
+        <div class="col-xs-6">
+            <h4>......................................................................</h4>
+            <p>
+               Osoba upoważniona do wystawienia 
+            </p>
         </div>
     </div>
 

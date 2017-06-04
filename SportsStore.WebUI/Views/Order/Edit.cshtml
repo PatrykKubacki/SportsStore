@@ -1,0 +1,53 @@
+﻿@using SportsStore.Domain.Data
+@model Order
+
+@{
+    ViewBag.Title = $"Edycja: {Model.Name}";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Edycja @Model.Name</h3>
+    </div>
+    @using (Html.BeginForm("Edit", "Order", FormMethod.Post))
+    {
+        <div class="panel-body">
+            @Html.HiddenFor(x => x.Id)
+            @foreach (var property in ViewData.ModelMetadata.Properties)
+            {
+                switch (property.PropertyName)
+                {
+                    case "Id":
+                    case "Status":
+                    case "Name":
+                    case "User":
+                    case "OrderLists":
+                    case "Date":
+                    case "StatusId":
+                    case "UserId":
+                        break;
+                    default:
+                        <div class="form-group">
+                            <label>@(property.DisplayName ?? property.PropertyName)</label>
+                            @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+                            @Html.ValidationMessage(property.PropertyName)
+                        </div>
+                        break;
+                }
+            }
+            @Html.HiddenFor(p=>p.Name)
+            @Html.HiddenFor(p=>p.UserId)
+            <div class="form-group">
+                <label>Status</label>
+                @Html.DropDownListFor(p=>p.StatusId, (SelectList)ViewBag.Statues
+                                      , "Wybierz status", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m=>m.StatusId)
+            </div>
+
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Zapisz" class="btn btn-primary" />
+            @Html.ActionLink("Wróć do listy", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+    }
+</div>
