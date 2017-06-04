@@ -1,0 +1,70 @@
+﻿@using System.Globalization
+@using SportsStore.Domain.Data
+@model IEnumerable<OrderList>
+@{
+    Layout = "~/Views/Shared/_UserPanelLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4 col-md-push-3">
+        <h3>Szczegóły zamówienia</h3>
+        <h4>@Model.FirstOrDefault().Order.Name</h4>
+</div>
+</div><br/>
+
+<div class="row">
+    <div class="col-md-4 ">
+        <p>
+            Zamówienie z dnia: @Model.FirstOrDefault().Order.Date.ToShortDateString()<br/>
+            Termin zapłaty: @Model.FirstOrDefault().Order.Date.AddDays(10).ToShortDateString()</p>
+    </div>
+</div><br/>
+
+<div class="row">
+    <div class="col-xs-10">
+        <h4>Produkty</h4>
+        @{
+            var total = 0.00;
+            <table class="table">
+                <tr>
+                    <th>Nazwa towary</th>
+                    <th>ilość</th>
+                    <th>Jednostka</th>
+                    <th>Wartość brutto</th>
+                    <th>Vat %</th>
+                    <th>Wartość netto</th>
+                </tr>
+
+
+                @foreach (var item in Model) {
+                    <tr>
+                        <td>@item.Product.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>szt.</td>
+                        <td>@(((double)item.Product.Price * 0.77).ToString("C", CultureInfo.CreateSpecificCulture("pl")))</td>
+                        <td>23%</td>
+                        <td>@item.Product.Price.ToString("C", CultureInfo.CreateSpecificCulture("pl"))</td>
+                    </tr>
+                }
+            </table>
+            <h4>Razem do zapłaty: @GetTotalValue(Model).ToString("C", CultureInfo.CreateSpecificCulture("pl"))</h4>
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-10">
+        <p>Status transakcji: @Model.FirstOrDefault().Order.Status.Name</p>
+    </div>
+</div>
+
+<div class="row">
+<div class="col-xs-10">
+    @Html.ActionLink("Powrót do listy zamówień","Index","Order", new { Id = Model.FirstOrDefault().Order.UserId }, new{@class = "btn btn-primary" })
+    </div>
+</div>
+
+@functions {
+    double GetTotalValue(IEnumerable<OrderList> orders) {
+        return orders.Sum(item => (double)item.Product.Price);
+    }
+}

@@ -39,10 +39,15 @@
             </tr>
             </tbody>
         </table>
-
-        @(HttpContext.Current.User.IsInRole("Administrator")
-              ? Html.ActionLink("Przejdz do panelu administracyjnego", "Index", "Product", null, new { @class = "btn btn-primary" })
-              : Html.ActionLink("Przejdz do zakupów", "List", "Product", null, new { @class = "btn btn-primary" }))
+        
+        @{
+            if (HttpContext.Current.User.IsInRole("Administrator")) {
+                @Html.ActionLink("Przejdz do panelu administracyjnego", "Index", "Product", null, new { @class = "btn btn-primary" });
+            } else {
+                @Html.ActionLink("Przejdz do zakupów", "List", "Product", null, new { @class = "btn btn-primary" });
+                @Html.ActionLink("Historia zakupów","Index","Order", new { Id = Model.Id }, new{@class = "btn btn-primary" });
+            }
+        }
 
         @Html.ActionLink("Zmiana danych", "Edit", "Account", new { Id = Model.Id }, new { @class = "btn btn-warning" })
         @Html.ActionLink("Zmiana hasła", "ChangePassword", "Account", new{Id = Model.Id}, new { @class = "btn btn-danger" })

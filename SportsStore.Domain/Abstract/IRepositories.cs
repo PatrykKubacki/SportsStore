@@ -23,8 +23,14 @@ namespace SportsStore.Domain.Abstract
     public interface IOrderRepository
     {
         IEnumerable<Order> Orders { get; }
+        void SaveOrder(Order order);
     }
 
+    public interface IOrderListRepository
+    {
+        IEnumerable<OrderList> OrdersList { get; }
+        void SaveOrderList(IEnumerable<OrderList> list);
+    }
 
     public interface IProductRepository
     {

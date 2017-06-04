@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="Id" />
@@ -35,6 +35,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="StatusId" Type="int" />
           <Property Name="UserId" Type="int" />
         </EntityType>
@@ -100,7 +101,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Order__StatusId__7D439ABD">
+        <Association Name="FK__Order__StatusId__160F4887">
           <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
@@ -112,7 +113,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Order__UserId__7E37BEF6">
+        <Association Name="FK__Order__UserId__17036CC0">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
@@ -198,11 +199,11 @@
             <End Role="City" EntitySet="City" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Order__StatusId__7D439ABD" Association="Self.FK__Order__StatusId__7D439ABD">
+          <AssociationSet Name="FK__Order__StatusId__160F4887" Association="Self.FK__Order__StatusId__160F4887">
             <End Role="Status" EntitySet="Status" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
-          <AssociationSet Name="FK__Order__UserId__7E37BEF6" Association="Self.FK__Order__UserId__7E37BEF6">
+          <AssociationSet Name="FK__Order__UserId__17036CC0" Association="Self.FK__Order__UserId__17036CC0">
             <End Role="User" EntitySet="User" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
@@ -227,8 +228,7 @@
             <End Role="OrderList" EntitySet="OrderList" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -271,6 +271,7 @@
           <NavigationProperty Name="Status" Relationship="Self.FK__Order__StatusId__7D439ABD" FromRole="Order" ToRole="Status" />
           <NavigationProperty Name="User" Relationship="Self.FK__Order__UserId__7E37BEF6" FromRole="Order" ToRole="User" />
           <NavigationProperty Name="OrderLists" Relationship="Self.FK_order" FromRole="Order" ToRole="OrderList" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="OrderList">
           <Key>
@@ -506,6 +507,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="Model1.Order">
               <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />

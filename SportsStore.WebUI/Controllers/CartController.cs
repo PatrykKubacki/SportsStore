@@ -11,11 +11,13 @@ namespace SportsStore.WebUI.Controllers
     {
         IProductRepository _repository;
         IOrderProcessor _orderProcessor;
+        IUserRepository _userRepository;
 
-        public CartController(IProductRepository repository, IOrderProcessor orderProcessor)
+        public CartController(IProductRepository repository, IOrderProcessor orderProcessor, IUserRepository userRepository)
         {
             _repository = repository;
             _orderProcessor = orderProcessor;
+            _userRepository = userRepository;
         }
 
         public ViewResult Index(Cart cart, string returnUrl)
@@ -52,23 +54,17 @@ namespace SportsStore.WebUI.Controllers
             return PartialView(cart);
         }
 
-        public ViewResult Checkout()
-        {
-            return View(new ShippingDetails());
-        }
-
-        [HttpPost]
-        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
+        public ViewResult Checkout(Cart cart)
         {
             if (!cart.Lines.Any())
                 ModelState.AddModelError("", "Koszyk jest pusty");
 
-            if (!ModelState.IsValid) return View(new ShippingDetails());
+            if (!ModelState.IsValid) return View();
 
-            _orderProcessor.ProcessOrder(cart, shippingDetails);
+            var user = _userRepository.Users.FirstOrDefault(u => u.Email == HttpContext.User.Identity.Name);
+            _orderProcessor.ProcessOrder(cart, user);
             cart.Clear();
             return View("Completed");
         }
     }
-
 }

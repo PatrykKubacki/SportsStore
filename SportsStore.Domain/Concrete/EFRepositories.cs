@@ -111,6 +111,23 @@ namespace SportsStore.Domain.Concrete
     {
         Entities _context = new Entities();
         public IEnumerable<Order> Orders => _context.Orders;
+
+        public void SaveOrder(Order order)
+        {
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+        }
+    }
+    public class EFOrderListRepository : IOrderListRepository
+    {
+        Entities _context = new Entities();
+        public IEnumerable<OrderList> OrdersList => _context.OrderLists;
+
+        public void SaveOrderList(IEnumerable<OrderList> orderList)
+        {
+            _context.OrderLists.AddRange(orderList);
+            _context.SaveChanges();
+        }
     }
 
 

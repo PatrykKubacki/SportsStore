@@ -36,19 +36,14 @@ namespace SportsStore.WebUI.Infrastructure
 			_kernel.Bind<IAddressRepository>().To<EFAddressRepository>();
 			_kernel.Bind<ICategoryRepository>().To<EFCategoryRepository>();
 			_kernel.Bind<IOrderRepository>().To<EFOrderRepository>();
+			_kernel.Bind<IOrderListRepository>().To<EFOrderListRepository>();
 			_kernel.Bind<IRoleRepository>().To<EFRoleRepository>();
 			_kernel.Bind<IUserRepository>().To<EFUserRepository>();
 			_kernel.Bind<ICityRepository>().To<EFCityRepository>();
 			_kernel.Bind<IStatusRepository>().To<EFStatusRepository>();
 		    _kernel.Bind<IAuthentication>().To<Authentication>();
 		    _kernel.Bind<IEmailSender>().To<EmailSender>();
-
-			var emailSettings = new EmailSettings
-			{
-				WriteAsFile = bool.Parse(ConfigurationManager.AppSettings["Emaill.WriteAsFile"] ?? "false")
-			};
-
-			_kernel.Bind<IOrderProcessor>().To<EmailOrderProcesssor>().WithConstructorArgument("emailSettings", emailSettings);
+		    _kernel.Bind<IOrderProcessor>().To<OrderProcesssor>();
 		}
 	}
 

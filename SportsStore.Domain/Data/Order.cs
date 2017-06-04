@@ -24,6 +24,7 @@ namespace SportsStore.Domain.Data
         public System.DateTime Date { get; set; }
         public Nullable<int> StatusId { get; set; }
         public Nullable<int> UserId { get; set; }
+        public string Name { get; set; }
     
         public virtual Status Status { get; set; }
         public virtual User User { get; set; }
