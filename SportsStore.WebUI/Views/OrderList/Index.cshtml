@@ -30,9 +30,10 @@
                     <th>Nazwa towary</th>
                     <th>ilość</th>
                     <th>Jednostka</th>
-                    <th>Wartość brutto</th>
-                    <th>Vat %</th>
                     <th>Wartość netto</th>
+                    <th>Vat %</th>
+                    <th>Vat</th>
+                    <th>Wartość brutto</th>
                 </tr>
 
 
@@ -41,9 +42,10 @@
                         <td>@item.Product.Name</td>
                         <td>@item.Quantity</td>
                         <td>szt.</td>
-                        <td>@(((double)item.Product.Price * 0.77).ToString("C", CultureInfo.CreateSpecificCulture("pl")))</td>
+                        <td>@(((double)item.Product.Price * 0.77 * item.Quantity).ToString("C", CultureInfo.CreateSpecificCulture("pl")))</td>
                         <td>23%</td>
-                        <td>@item.Product.Price.ToString("C", CultureInfo.CreateSpecificCulture("pl"))</td>
+                        <td>@(((double)item.Product.Price * 0.23 * item.Quantity).ToString("C", CultureInfo.CreateSpecificCulture("pl")))</td>
+                        <td>@((item.Product.Price*item.Quantity).ToString("C", CultureInfo.CreateSpecificCulture("pl")))</td>
                     </tr>
                 }
             </table>
@@ -65,6 +67,6 @@
 
 @functions {
     double GetTotalValue(IEnumerable<OrderList> orders) {
-        return orders.Sum(item => (double)item.Product.Price);
+        return orders.Sum(item => (double)item.Product.Price * item.Quantity);
     }
 }

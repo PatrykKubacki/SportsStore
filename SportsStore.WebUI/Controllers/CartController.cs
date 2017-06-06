@@ -39,6 +39,24 @@ namespace SportsStore.WebUI.Controllers
             return RedirectToAction("Index", new { returnUrl });
         }
 
+        public ActionResult AddOneToCart(Cart cart, int Id, string returnUrl)
+        {
+            var product = _repository.Products.FirstOrDefault(p => p.Id == Id);
+            if (product != null)
+                cart.AddItem(product, 1);
+
+            return RedirectToAction("Index", new { returnUrl });
+        }
+
+        public ActionResult RemoveOneFromCart(Cart cart, int Id, string returnUrl)
+        {
+            var product = _repository.Products.FirstOrDefault(p => p.Id == Id);
+            if (product != null)
+                cart.RemoveOne(product);
+
+            return RedirectToAction("Index", new { returnUrl });
+        }
+
         public RedirectToRouteResult RemoveFromCart(Cart cart, int Id, string returnUrl)
         {
             var product = _repository.Products.FirstOrDefault(p => p.Id == Id);

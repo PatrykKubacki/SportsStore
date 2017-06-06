@@ -24,7 +24,15 @@ namespace SportsStore.Domain.Data
 			_cartLines.RemoveAll(p => p.Product.Id == product.Id);
 		}
 
-		public decimal ComputeTotalValue()
+	    public void RemoveOne(Product product)
+	    {
+	        var qty = _cartLines.Find(p => p.Product.Id == product.Id).Quantity;
+
+	        if (qty > 1)
+	            _cartLines.Find(p => p.Product.Id == product.Id).Quantity = --qty;
+	    }
+
+        public decimal ComputeTotalValue()
 		{
 			return _cartLines.Sum(p => p.Product.Price * p.Quantity);
 		}

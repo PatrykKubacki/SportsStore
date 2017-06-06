@@ -19,7 +19,11 @@
 	<tbody>
 	@foreach (var line in Model.Cart.Lines) {
 		<tr>
-			<td class="text-center">@line.Quantity</td>
+		    <td class="text-center">
+		        @Html.ActionLink("+","AddOneToCart","Cart",new {id = line.Product.Id, returnUrl = Request.Url.PathAndQuery },new {@class="btn btn-sm btn-success"})
+		        @line.Quantity
+		        @Html.ActionLink("-","RemoveOneFromCart","Cart", new { id = line.Product.Id, returnUrl = Request.Url.PathAndQuery }, new {@class="btn btn-sm btn-success"})
+		    </td>
 			<td class="text-left">@line.Product.Name</td>
 			<td class="text-right">@line.Product.Price.ToString("c", CultureInfo.CreateSpecificCulture("pl-pl"))</td>
 			<td class="text-right">@((line.Quantity * line.Product.Price).ToString("c",CultureInfo.CreateSpecificCulture("pl-pl"))).</td>
@@ -27,7 +31,7 @@
 			@using (Html.BeginForm("RemoveFromCart","Cart")) {
 				@Html.Hidden("Id",line.Product.Id)
 				@Html.HiddenFor( x=> x.ReturnUrl)
-				<input type="submit" class="btn btn-sm btn-warning" value="Usuń">
+				<input type="submit" class="btn btn-sm btn-warning" value="Usuń" onclick="return confirm('Czy na pewno chcesz usunąć?');">
 			}
 			</td>
 		</tr>
